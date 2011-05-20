@@ -3,6 +3,7 @@ package org.encorelab.sail.helioroom;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.encorelab.sail.Event;
 import org.encorelab.sail.helioroom.R;
 import org.encorelab.sail.helioroom.XmppService.LocalBinder;
 
@@ -100,7 +101,10 @@ public class HypothesisTab extends Activity implements Observer {
 			// FIXME adding observer in onCreate fails, here it is not
 			// the right place either :/
 			//Helioroom.nt.addObserver(hypo);
-			service.sendGroupChat(sendChat.getText().toString());
+			
+			Event ev = new Event("submitHypothesis", sendChat.getText().toString());
+			
+			service.sendGroupChat(ev.toJson());
 
 			// Clears the text fields
 			sendChat.setText("");

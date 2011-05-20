@@ -27,8 +27,10 @@ public class Hypothesis extends java.util.Observable implements
 				body = (Element) doc.getRootElement().element("body");
 				
 				// store the message
-				// TODO parse the message JSON here or in the observer (like HypothesisTab)
-				setMessage(body.getText());
+				
+				Event ev = Event.fromJson(body.getText());
+				
+				setMessage(ev.getPayloadAsString());
 				
 				/*instanceId = firstBodyEl.getName();
 				configureWindows(firstBodyEl.element("windows").asXML());
