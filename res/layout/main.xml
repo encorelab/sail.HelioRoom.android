@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@android:id/tabhost" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<LinearLayout android:orientation="vertical"
+		android:layout_width="fill_parent" android:layout_height="fill_parent" android:padding="5dp">
+		<TabWidget android:id="@android:id/tabs"
+			android:layout_width="fill_parent" android:layout_height="wrap_content" />   <!-- make sure this is height=wrap_content. Be very careful with height = "fill_parent" -->
+		<FrameLayout android:id="@android:id/tabcontent"
+			android:layout_width="fill_parent" android:layout_height="fill_parent" android:padding="5dp" />
+	</LinearLayout>
+</TabHost>
+
+<!-- <TableLayout android:id="@+id/hyp" android:layout_width="fill_parent" 
+	android:layout_height="wrap_content" android:stretchColumns="1" android:paddingTop="4px"> 
+	</TableLayout> <RadioGroup android:id="@+id/planets" android:layout_width="fill_parent" 
+	android:layout_height="80dp" android:gravity="center" android:orientation="horizontal"> 
+	<RadioButton android:id="@+id/redPre" android:text="Red" android:layout_weight="1" 
+	android:gravity="center|left" /> <RadioButton android:id="@+id/OrangePre" 
+	android:text="Orange" /> <RadioButton android:id="@+id/YellowPre" android:text="Yellow" 
+	/> <RadioButton android:id="@+id/GreenPre" android:text="Green" /> <RadioButton 
+	android:id="@+id/BluePre" android:text="Blue" /> <RadioButton android:id="@+id/PurplePre" 
+	android:text="Purple" /> <RadioButton android:id="@+id/BrownPre" android:text="Brown" 
+	/> <RadioButton android:id="@+id/GreyPre" android:text="Grey" /> <RadioButton 
+	android:id="@+id/PinkPre" android:text="Pink" /> </RadioGroup> </TableLayout> -->
+
+
+<!--	
+	<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#f0600000"/>
+    <stroke android:width="3dp" color="#ffff8080"/>
+    <corners android:radius="3dp" />
+    <padding android:left="10dp" android:top="10dp"
+        android:right="10dp" android:bottom="10dp" />
+</shape>
+
+  				<shape xmlns:android="http://schemas.android.com/apk/res/android"
+					android:shape="oval" android:width="80dp" android:color="#FFFF00" />-->
+				
+	

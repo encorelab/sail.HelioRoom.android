@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="org.encorelab.sail.helioroom" android:versionCode="1"
+	android:versionName="1.0">
+	<uses-sdk android:minSdkVersion="11" />
+	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+	<application android:icon="@drawable/helio" android:label="@string/app_name">
+		<activity android:name="Helioroom" android:screenOrientation="portrait"
+			android:label="@string/app_name">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+		<activity android:name=".ObservationTab" />
+		<activity android:name=".HypothesisTab" />
+		<activity android:name=".InquiryTab" />
+		
+		<service android:name="XmppService"></service>
+	</application>
+</manifest>

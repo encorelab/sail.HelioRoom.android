@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+	<TableLayout android:layout_height="wrap_content"
+		android:layout_width="wrap_content" android:stretchColumns="*"
+		android:id="@+id/inqDiscTable">
+		<TableRow android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+			<TextView android:text="Question" android:textSize="30sp" android:textStyle="bold"
+				android:layout_height="wrap_content" android:layout_width="0dip"
+				android:layout_weight="1" />
+			<TextView android:text="Idea/Comment" android:textSize="30sp" android:textStyle="bold"
+				android:layout_height="wrap_content" android:layout_width="0dip"
+				android:layout_weight="1" />
+		</TableRow>
+		<TableRow android:layout_width="fill_parent" android:layout_height="fill_parent">
+			<ListView android:id="@+id/inqList" android:layout_height="300sp"
+				android:layout_width="0dip" android:layout_weight="1" />
+			<ListView android:id="@+id/discList" android:layout_height="300sp"
+				android:layout_width="0dip" android:layout_weight="1" />
+		</TableRow>
+		<TableRow android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+			<EditText android:id="@+id/inqTitle" android:hint="Title"
+				android:layout_height="wrap_content" android:layout_width="0dip"
+				android:layout_weight="1" />
+			<EditText android:id="@+id/discTitle" android:hint="Title"
+				android:layout_height="wrap_content" android:layout_width="0dip"
+				android:layout_weight="1" />
+		</TableRow>
+		<TableRow android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+			<EditText android:id="@+id/inqNote" android:hint="Note"
+				android:layout_height="wrap_content" android:layout_width="0dip"
+				android:layout_weight="1" />
+			<EditText android:id="@+id/discNote" android:hint="Note"
+				android:layout_height="wrap_content" android:layout_width="0dip"
+				android:layout_weight="1" />
+		</TableRow>
+		<TableRow android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+			<TextView android:text="Inquiry Discussion Viewer"
+				android:textStyle="bold" android:textSize="30sp" android:padding="4sp"
+				android:layout_height="wrap_content" android:layout_width="wrap_content"
+				android:layout_below="@id/inqDiscTable" />
+		</TableRow>
+		<TableRow android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+			<TextView android:id="@+id/viewerTitle" android:textStyle="bold" android:textSize="20sp"
+			android:padding="4sp" android:layout_width="wrap_content" android:layout_height="fill_parent" />
+		</TableRow>
+		<TableRow android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+			<TextView android:id="@+id/viewerNote" android:textSize="20sp" android:padding="4sp"
+			android:layout_width="wrap_content" android:layout_height="fill_parent" />
+		</TableRow>
+	</TableLayout>
+	<Button android:id="@+id/contribButton" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:layout_alignParentBottom="true"
+		android:layout_alignParentRight="true" android:text="Contribute" />
+</RelativeLayout>
