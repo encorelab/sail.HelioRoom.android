@@ -30,6 +30,8 @@ public class InquiryTab extends Activity {
 	EditText dContent = null;
 	TextView vTitle = null;
 	TextView vNote = null;
+	TextView vComment = null;
+	EditText vEdit = null;
 	
 	List<Inquiry> inqList = new ArrayList<Inquiry>();
 	List<Inquiry> discList = new ArrayList<Inquiry>();
@@ -37,6 +39,9 @@ public class InquiryTab extends Activity {
 	InquiryAdapter qAdapter = null;
 	DiscussionAdapter dAdapter = null;
 
+	Inquiry currentInq = null;			//used for Inq Disc Viewer
+	
+//	int inqId = 0; This would need to be updated on Matt's end
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,6 +53,8 @@ public class InquiryTab extends Activity {
 		dContent = (EditText) findViewById(R.id.discNote);
 		vTitle = (TextView) findViewById(R.id.viewerTitle);
 		vNote = (TextView) findViewById(R.id.viewerNote);
+		vComment = (TextView) findViewById(R.id.viewerComment);
+		vEdit = (EditText) findViewById(R.id.viewerEdit);
 		ListView qList = (ListView) findViewById(R.id.inqList);
 		ListView dList = (ListView) findViewById(R.id.discList);
 		
@@ -61,8 +68,14 @@ public class InquiryTab extends Activity {
 
 		qList.setOnItemClickListener(onListClickInq);
 		dList.setOnItemClickListener(onListClickDisc);
+	
 		
 		//TODO:
+		//Get this working with Json out
+		//Do a little general formatting cleanup		
+		//Lock down contrib if there are no i objects
+		//
+		//
 		//JAVA
 		//Lock the contribute button?
 		//
@@ -74,8 +87,9 @@ public class InquiryTab extends Activity {
 		//Add pencil icons (LOW PRIORITY) drawableleft in xml
 		//Visible scroll bar (LOW PRIORITY)
 		//Change color BLUE to PURPLE (LOW PRIORITY)
+		//Color the text/background of the viewer comments?
 		//
-		//UNKNOWN
+		//EITHER/BOTH
 		//Highlight Q/D (one in viewer) should be colored as hex FF99FF, also highlight title in Viewer
 	}
 
@@ -89,26 +103,28 @@ public class InquiryTab extends Activity {
 	// Called when the user clicks contribute button
 	private View.OnClickListener onInqSubmit = new View.OnClickListener() {
 		public void onClick(View v) {
-			Inquiry i = new Inquiry();
-
+			
 			// the following if loops exist to force the correct behaviour with the Contribute button
 			// ie only allow a contrib if exactly Title and Note of one column are not null
-			if (dTitle.getText().toString().equals("") && dContent.getText().toString().equals("")) {
-				if (!qTitle.getText().toString().equals("") && !qContent.getText().toString().equals("")) {
-				// i.setId(inqId.getText().toString());
-				i.setInqType("question");
-				// i.setGroup(inqGroup.getText().toString());
-				i.setInqTitle(qTitle.getText().toString());
-				i.setInqContent(qContent.getText().toString());
-				// i.setParent(inqParent.getText().toString());
-				qAdapter.add(i);
-				//send to chat room (change to referencing the qList) FIXME
-				//Helioroom.nt.sendGroupChat(qTitle.getText().toString()+","+qContent.getText().toString());
-				}
+			// contrib for Question
+			if (dTitle.getText().toString().equals("") && dContent.getText().toString().equals("") && vEdit.getText().toString().equals("")
+				&& !qTitle.getText().toString().equals("") && !qContent.getText().toString().equals("")) {
+					Inquiry i = new Inquiry();
+					//i.setInqId(some int inqId);
+					i.setInqType("question");
+					// i.setGroup(inqGroup.getText().toString());
+					i.setInqTitle(qTitle.getText().toString());
+					i.setInqContent(qContent.getText().toString());
+					// i.setParent(inqParent.getText().toString());
+					qAdapter.add(i);
+					//send to chat room (change to referencing the qList) FIXME
+					//Helioroom.nt.sendGroupChat(qTitle.getText().toString()+","+qContent.getText().toString());
 			}
-			else if (qTitle.getText().toString().equals("") && qContent.getText().toString().equals("")) {
-				if (!dTitle.getText().toString().equals("") && !dContent.getText().toString().equals("")) {
-					// i.setId(inqId.getText().toString());
+			// contrib for Disc
+			else if (qTitle.getText().toString().equals("") && qContent.getText().toString().equals("") && vEdit.getText().toString().equals("")
+				&& !dTitle.getText().toString().equals("") && !dContent.getText().toString().equals("")) {
+					Inquiry i = new Inquiry();
+					//i.setInqId(some int inqId);
 					i.setInqType("discussion");				
 					// i.setGroup(inqGroup.getText().toString());
 					i.setInqTitle(dTitle.getText().toString());
@@ -117,20 +133,32 @@ public class InquiryTab extends Activity {
 					dAdapter.add(i);
 					//send to chat room (change to referencing the dList) FIXME
 					//Helioroom.nt.sendGroupChat(dTitle.getText().toString()+","+dContent.getText().toString());
-				}
 			}
+			// contrib for Viewer (god this is ugly)
+			// FIXME need to lock this one down so that it cant be accessed when there are no i objects
+			else if (qTitle.getText().toString().equals("") && qContent.getText().toString().equals("") &&
+				dTitle.getText().toString().equals("") && dContent.getText().toString().equals("") &&
+				!vEdit.getText().toString().equals("")) {
+					// i.setId(inqId.getText().toString());
+					currentInq.setInqType("inquiry with comments");			
+					// i.setGroup(inqGroup.getText().toString());
+					currentInq.addInqComment(vEdit.getText().toString());
+					vComment.setText(currentInq.getInqComments());
+			}
+
 			else {
 				qTitle.setText("");
 				qContent.setText("");
 				dTitle.setText("");
 				dContent.setText("");
+				vEdit.setText("");
 			}
 			
-			// Clears the text fields (this might interact poorly with android:hint in xml)
 			qTitle.setText("");
 			qContent.setText("");
 			dTitle.setText("");
 			dContent.setText("");
+			vEdit.setText("");
 		}
 	};
 	
@@ -143,7 +171,9 @@ public class InquiryTab extends Activity {
 
 			Inquiry i = inqList.get(position);
 			vTitle.setText(i.getInqTitle());
-			vNote.setText(i.getInqContent());			
+			vNote.setText(i.getInqContent());
+			vComment.setText(i.getInqComments());
+			currentInq = i;
 //			vTitle.setTextColor(Color.BLUE);
 //			parent.getChildAt(position).setBackgroundColor(Color.BLUE); //this needs to reset the colors on all the other ones
 		}
@@ -157,6 +187,8 @@ public class InquiryTab extends Activity {
 			Inquiry i = discList.get(position);
 			vTitle.setText(i.getInqTitle());
 			vNote.setText(i.getInqContent());
+			vComment.setText(i.getInqComments());
+			currentInq = i;
 //			vTitle.setTextColor(Color.BLUE);	//maybe better to do text color
 //			parent.getChildAt(position).setBackgroundColor(Color.BLUE);
 		}
@@ -181,7 +213,7 @@ public class InquiryTab extends Activity {
 			}
 
 			holder.populateFrom(inqList.get(position));
-
+			
 			return (row);
 		}
 	}
@@ -213,7 +245,7 @@ public class InquiryTab extends Activity {
 	
 	static class InquiryHolder {
 		private TextView title = null;
-		private TextView content = null;
+//		private TextView content = null;
 		private View row = null;
 
 		InquiryHolder(View row) {

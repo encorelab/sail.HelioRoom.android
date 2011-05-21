@@ -1,18 +1,24 @@
 package org.encorelab.sail.helioroom;
 
 public class Inquiry {
-	private String inqId = "";
+	private int inqId;
 	private String inqType = "";
 	private String inqGroup = "";
 	private String inqTitle = "";
 	private String inqContent = "";
-	private String inqParent = "";
+	private String inqComment = ""; //is this a string?
 	
-	public void setInqId(String inqId) {
+	public void setInqId(int inqId) {
 		this.inqId = inqId;
 	}
-	public String getInqId() {
+	public int getInqId() {
 		return inqId;
+	}
+	public void setInqType(String inqType) {
+		this.inqType = inqType;
+	}
+	public String getInqType() {
+		return inqType;
 	}
 	public void setInqGroup(String inqGroup) {
 		this.inqGroup = inqGroup;
@@ -32,18 +38,12 @@ public class Inquiry {
 	public String getInqContent() {
 		return inqContent;
 	}
-	public void setInqParent(String inqParent) {
-		this.inqParent = inqParent;
+	public void addInqComment(String comment) {
+		this.inqComment += "\n" + this.inqGroup + comment;
+									//will also need a group ID or whatever, the above should work
 	}
-	public String getInqParent() {
-		return inqParent;
-	}
-	public void setInqType(String inqType) {
-		this.inqType = inqType;
-	}
-	public String getInqType() {
-		return inqType;
+	public String getInqComments() {
+		return inqComment;
 	}
 
-	
 }

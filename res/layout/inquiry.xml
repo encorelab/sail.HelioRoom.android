@@ -50,13 +50,24 @@
 			<TextView android:id="@+id/viewerTitle" android:textStyle="bold" android:textSize="20sp"
 			android:padding="4sp" android:layout_width="wrap_content" android:layout_height="fill_parent" />
 		</TableRow>
-		<TableRow android:layout_width="fill_parent"
-			android:layout_height="fill_parent">
+		<TableRow android:layout_width="fill_parent" android:layout_height="fill_parent">
 			<TextView android:id="@+id/viewerNote" android:textSize="20sp" android:padding="4sp"
 			android:layout_width="wrap_content" android:layout_height="fill_parent" />
 		</TableRow>
+		<TableRow android:layout_width="fill_parent" android:layout_height="fill_parent">
+			<TextView android:id="@+id/viewerComment" android:textSize="20sp" android:padding="4sp"
+			android:layout_width="wrap_content" android:layout_height="fill_parent" />
+		</TableRow>
+<!-- 		not sure the textSize in the above does anything -->
 	</TableLayout>
-	<Button android:id="@+id/contribButton" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:layout_alignParentBottom="true"
-		android:layout_alignParentRight="true" android:text="Contribute" />
+
+<!-- 	Does this want to stay here? Ugly specified width	 -->
+<!-- It may be better to put these both in the table and get rid of the Rel layout -->
+	<EditText android:id="@+id/viewerEdit" android:hint="Add comment"
+	android:layout_height="wrap_content" android:layout_width="630sp"
+	android:layout_alignParentBottom="true" android:layout_alignParentLeft="true" />
+
+	<Button android:id="@+id/contribButton" android:text="Contribute" 
+		android:layout_width="wrap_content"	android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"	android:layout_alignParentRight="true" />
 </RelativeLayout>
