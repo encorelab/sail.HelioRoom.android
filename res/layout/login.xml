@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+    <TextView android:text="Please log in to HelioRoom..." android:textSize="30sp" android:textStyle="bold"
+    	android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="15sp"/>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="horizontal" android:layout_weight="1" >
+	    <Button android:text="Group 1" android:id="@+id/button1" android:layout_width="wrap_content" android:layout_height="match_parent"
+	    	android:layout_weight="1" android:layout_margin="25sp" />
+	    <Button android:text="Group 2" android:id="@+id/button2" android:layout_width="wrap_content" android:layout_height="match_parent"
+	    	android:layout_weight="1" android:layout_margin="25sp"/>
+	    <Button android:text="Group 3" android:id="@+id/button3" android:layout_width="wrap_content" android:layout_height="match_parent"
+	    	android:layout_weight="1" android:layout_margin="25sp" />
+    </LinearLayout>
+	<LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="horizontal" android:layout_weight="1" >    
+	    <Button android:text="Group 4" android:id="@+id/button4" android:layout_width="wrap_content" android:layout_height="match_parent"
+	    	android:layout_weight="1" android:layout_margin="25sp" />
+	    <Button android:text="Group 5" android:id="@+id/button5" android:layout_width="wrap_content" android:layout_height="match_parent"
+	    	android:layout_weight="1" android:layout_margin="25sp" />
+	    <Button android:text="Group 6" android:id="@+id/button6" android:layout_width="wrap_content" android:layout_height="match_parent"
+	    	android:layout_weight="1" android:layout_margin="25sp" />
+	</LinearLayout>
+    <Button android:text="Teacher" android:id="@+id/button7" android:layout_width="216sp" android:layout_height="match_parent"
+    	android:layout_margin="25sp" />
+</LinearLayout>
