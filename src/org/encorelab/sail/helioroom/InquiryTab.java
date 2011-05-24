@@ -21,7 +21,6 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 
-
 public class InquiryTab extends Activity {
 
 	EditText qTitle = null;
@@ -39,7 +38,8 @@ public class InquiryTab extends Activity {
 	InquiryAdapter qAdapter = null;
 	DiscussionAdapter dAdapter = null;
 
-	Inquiry currentInq = null;			//used for Inq Disc Viewer
+	Inquiry currentInq = null;			//used for Inq Disc Viewer. NO LONGER NEEDED?
+//	int selectedInqPos = 0;		//used for background color changes (AWK)
 	
 //	int inqId = 0; This would need to be updated on Matt's end
 	
@@ -68,26 +68,16 @@ public class InquiryTab extends Activity {
 
 		qList.setOnItemClickListener(onListClickInq);
 		dList.setOnItemClickListener(onListClickDisc);
-	
 		
 		//TODO:
-		//Get this working with Json out
-		//Do a little general formatting cleanup		
-		//Lock down contrib if there are no i objects
-		//
-		//
-		//JAVA
-		//Lock the contribute button?
-		//
+		//Get this working with Json out OBV rollcall/proto isnt working right now
+		//Do a little general formatting cleanup
+		//Do a log in screen
 		//
 		//XML
-		//Increase font size of question/ideas list items
 		//Add boxes around the three lists (LOW PRIORITY)
-		//Make contribute active (when title+note OR text entered in viewer comment)
 		//Add pencil icons (LOW PRIORITY) drawableleft in xml
 		//Visible scroll bar (LOW PRIORITY)
-		//Change color BLUE to PURPLE (LOW PRIORITY)
-		//Color the text/background of the viewer comments?
 		//
 		//EITHER/BOTH
 		//Highlight Q/D (one in viewer) should be colored as hex FF99FF, also highlight title in Viewer
@@ -135,15 +125,16 @@ public class InquiryTab extends Activity {
 					//Helioroom.nt.sendGroupChat(dTitle.getText().toString()+","+dContent.getText().toString());
 			}
 			// contrib for Viewer (god this is ugly)
-			// FIXME need to lock this one down so that it cant be accessed when there are no i objects
 			else if (qTitle.getText().toString().equals("") && qContent.getText().toString().equals("") &&
 				dTitle.getText().toString().equals("") && dContent.getText().toString().equals("") &&
 				!vEdit.getText().toString().equals("")) {
+				if (!inqList.isEmpty() || !discList.isEmpty()) {		//locks contrib button if the lists are empty
 					// i.setId(inqId.getText().toString());
 					currentInq.setInqType("inquiry with comments");			
 					// i.setGroup(inqGroup.getText().toString());
 					currentInq.addInqComment(vEdit.getText().toString());
 					vComment.setText(currentInq.getInqComments());
+				}
 			}
 
 			else {
@@ -169,13 +160,21 @@ public class InquiryTab extends Activity {
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 
+			for (int x=0; x < inqList.size(); x++) {
+				parent.getChildAt(x).setBackgroundColor(Color.argb(0,0,0,0));	//turn the background color off
+//				discList(x).setBackgroundColor(Color.argb(0,0,0,0));		//how can I access the 'dom'?
+			}
+				
+//			parent.getChildAt(selectedInqPos).setBackgroundColor(Color.argb(0,0,0,0));
+
 			Inquiry i = inqList.get(position);
 			vTitle.setText(i.getInqTitle());
 			vNote.setText(i.getInqContent());
 			vComment.setText(i.getInqComments());
 			currentInq = i;
-//			vTitle.setTextColor(Color.BLUE);
-//			parent.getChildAt(position).setBackgroundColor(Color.BLUE); //this needs to reset the colors on all the other ones
+			vTitle.setBackgroundColor(Color.argb(255,200,0,200));
+			parent.getChildAt(position).setBackgroundColor(Color.argb(255,200,0,200));
+//			selectedInqPos = position;				//var to switch background color off on the next onclick
 		}
 	};
 
@@ -184,19 +183,26 @@ public class InquiryTab extends Activity {
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 
+			for (int x=0; x < discList.size(); x++) {
+// this is def the way to go		inqList.get(position).setBackgroundColor(Color.argb(0,0,0,0));
+				parent.getChildAt(x).setBackgroundColor(Color.argb(0,0,0,0));	//turn the background color off
+			}
+//			parent.getChildAt(selectedInqPos).setBackgroundColor(Color.argb(0,0,0,0));	//turn the background color off
+
 			Inquiry i = discList.get(position);
 			vTitle.setText(i.getInqTitle());
 			vNote.setText(i.getInqContent());
 			vComment.setText(i.getInqComments());
 			currentInq = i;
-//			vTitle.setTextColor(Color.BLUE);	//maybe better to do text color
-//			parent.getChildAt(position).setBackgroundColor(Color.BLUE);
+			vTitle.setBackgroundColor(Color.argb(255,200,0,200));
+			parent.getChildAt(position).setBackgroundColor(Color.argb(255,200,0,200));
+//			selectedInqPos = position;	
 		}
 	};
 	
 	class InquiryAdapter extends ArrayAdapter<Inquiry> {
 		InquiryAdapter() {
-			super(InquiryTab.this, R.layout.row, inqList); // questionable
+			super(InquiryTab.this, R.layout.row, inqList);
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {

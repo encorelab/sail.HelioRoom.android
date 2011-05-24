@@ -34,7 +34,7 @@ public class Helioroom extends TabActivity {
 				.setContent(intent);
 		tabHost.addTab(spec);
 
-		getTabHost().setCurrentTab(1);
+		getTabHost().setCurrentTab(2);
 
 		// start XMPP connection
 		/*Helioroom.nt = new XMPPThread("test2",

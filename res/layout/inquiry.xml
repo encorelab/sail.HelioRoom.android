@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="wrap_content">
+	android:layout_width="match_parent" android:layout_height="wrap_content">
 
 	<TableLayout android:layout_height="wrap_content"
 		android:layout_width="wrap_content" android:stretchColumns="*"
 		android:id="@+id/inqDiscTable">
-		<TableRow android:layout_width="fill_parent"
-			android:layout_height="fill_parent">
+		<TableRow android:layout_width="match_parent"
+			android:layout_height="match_parent">
 			<TextView android:text="Question" android:textSize="30sp" android:textStyle="bold"
 				android:layout_height="wrap_content" android:layout_width="0dip"
 				android:layout_weight="1" />
@@ -14,60 +14,52 @@
 				android:layout_height="wrap_content" android:layout_width="0dip"
 				android:layout_weight="1" />
 		</TableRow>
-		<TableRow android:layout_width="fill_parent" android:layout_height="fill_parent">
-			<ListView android:id="@+id/inqList" android:layout_height="300sp"
+		<TableRow android:layout_width="match_parent" android:layout_height="match_parent">
+			<ListView android:id="@+id/inqList" android:layout_height="250sp"
 				android:layout_width="0dip" android:layout_weight="1" />
-			<ListView android:id="@+id/discList" android:layout_height="300sp"
+			<ListView android:id="@+id/discList" android:layout_height="250sp"
 				android:layout_width="0dip" android:layout_weight="1" />
 		</TableRow>
-		<TableRow android:layout_width="fill_parent"
-			android:layout_height="fill_parent">
+		<TableRow android:layout_width="match_parent"
+			android:layout_height="match_parent">
 			<EditText android:id="@+id/inqTitle" android:hint="Title"
 				android:layout_height="wrap_content" android:layout_width="0dip"
-				android:layout_weight="1" />
+				android:layout_weight="1" android:drawableRight="@drawable/pencil" />
 			<EditText android:id="@+id/discTitle" android:hint="Title"
 				android:layout_height="wrap_content" android:layout_width="0dip"
-				android:layout_weight="1" />
+				android:layout_weight="1" android:drawableRight="@drawable/pencil" />
 		</TableRow>
-		<TableRow android:layout_width="fill_parent"
-			android:layout_height="fill_parent">
+		<TableRow android:layout_width="match_parent"
+			android:layout_height="match_parent">
 			<EditText android:id="@+id/inqNote" android:hint="Note"
 				android:layout_height="wrap_content" android:layout_width="0dip"
-				android:layout_weight="1" />
+				android:layout_weight="1" android:drawableRight="@drawable/pencil" />
 			<EditText android:id="@+id/discNote" android:hint="Note"
 				android:layout_height="wrap_content" android:layout_width="0dip"
-				android:layout_weight="1" />
+				android:layout_weight="1" android:drawableRight="@drawable/pencil" />
 		</TableRow>
-		<TableRow android:layout_width="fill_parent"
-			android:layout_height="fill_parent">
+		<TableRow android:layout_width="match_parent"
+			android:layout_height="match_parent" android:layout_span="2" >
 			<TextView android:text="Inquiry Discussion Viewer"
 				android:textStyle="bold" android:textSize="30sp" android:padding="4sp"
 				android:layout_height="wrap_content" android:layout_width="wrap_content"
 				android:layout_below="@id/inqDiscTable" />
 		</TableRow>
-		<TableRow android:layout_width="fill_parent"
-			android:layout_height="fill_parent">
-			<TextView android:id="@+id/viewerTitle" android:textStyle="bold" android:textSize="20sp"
-			android:padding="4sp" android:layout_width="wrap_content" android:layout_height="fill_parent" />
-		</TableRow>
-		<TableRow android:layout_width="fill_parent" android:layout_height="fill_parent">
-			<TextView android:id="@+id/viewerNote" android:textSize="20sp" android:padding="4sp"
-			android:layout_width="wrap_content" android:layout_height="fill_parent" />
-		</TableRow>
-		<TableRow android:layout_width="fill_parent" android:layout_height="fill_parent">
-			<TextView android:id="@+id/viewerComment" android:textSize="20sp" android:padding="4sp"
-			android:layout_width="wrap_content" android:layout_height="fill_parent" />
-		</TableRow>
-<!-- 		not sure the textSize in the above does anything -->
+		<TextView android:id="@+id/viewerTitle" android:layout_span="2" android:textStyle="bold" android:textSize="20sp"
+			android:padding="4sp" android:layout_width="wrap_content" android:layout_height="match_parent" />
+		<TextView android:id="@+id/viewerNote" android:layout_span="2" android:textSize="20sp" android:padding="4sp"
+			android:layout_width="wrap_content" android:layout_height="match_parent" />
+		<ScrollView android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true" >
+			<TextView android:id="@+id/viewerComment" android:layout_span="2" android:textSize="20sp" android:padding="4sp"
+				android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1" />
+		</ScrollView>
+<!-- 		doesn't work... boh -->
 	</TableLayout>
-
-<!-- 	Does this want to stay here? Ugly specified width	 -->
-<!-- It may be better to put these both in the table and get rid of the Rel layout -->
-	<EditText android:id="@+id/viewerEdit" android:hint="Add comment"
-	android:layout_height="wrap_content" android:layout_width="630sp"
-	android:layout_alignParentBottom="true" android:layout_alignParentLeft="true" />
-
 	<Button android:id="@+id/contribButton" android:text="Contribute" 
 		android:layout_width="wrap_content"	android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"	android:layout_alignParentRight="true" />
+	<EditText android:id="@+id/viewerEdit" android:hint="Add comment"
+		android:layout_height="wrap_content" android:layout_width="match_parent"
+		android:layout_above="@id/contribButton" android:drawableRight="@drawable/pencil" />
+	
 </RelativeLayout>

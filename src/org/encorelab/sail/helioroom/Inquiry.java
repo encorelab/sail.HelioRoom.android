@@ -6,7 +6,7 @@ public class Inquiry {
 	private String inqGroup = "";
 	private String inqTitle = "";
 	private String inqContent = "";
-	private String inqComment = ""; //is this a string?
+	private String inqComment = "";
 	
 	public void setInqId(int inqId) {
 		this.inqId = inqId;

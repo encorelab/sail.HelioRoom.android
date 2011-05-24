@@ -1,10 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
-  			<LinearLayout android:id="@+id/obs_tab" android:orientation="horizontal"
-				android:layout_width="fill_parent" android:layout_height="fill_parent">				
-			</LinearLayout>
-  
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" >
+	<TextView android:text="Make an observation" android:textSize="25sp" android:layout_marginTop="10sp"
+		android:layout_width="match_parent" android:layout_height="wrap_content" />
+	<RadioGroup android:id="@+id/preButtons" android:orientation="horizontal"
+		android:layout_height="match_parent" android:layout_width="match_parent" android:padding="30dip" >
+		<RadioButton android:id="@+id/redPre" android:button="@drawable/red_radio" android:layout_weight="1" />
+		<RadioButton android:id="@+id/orangePre" android:button="@drawable/orange_radio" android:layout_weight="1" />
+		<RadioButton android:id="@+id/yellowPre" android:button="@drawable/yellow_radio" android:layout_weight="1" />
+		<RadioButton android:id="@+id/greenPre" android:button="@drawable/green_radio" android:layout_weight="1" />
+		<RadioButton android:id="@+id/bluePre" android:button="@drawable/blue_radio" android:layout_weight="1" />
+		<RadioButton android:id="@+id/purplePre" android:button="@drawable/purple_radio" android:layout_weight="1" />
+		<RadioButton android:id="@+id/brownPre" android:button="@drawable/brown_radio" android:layout_weight="1" />
+		<RadioButton android:id="@+id/grayPre" android:button="@drawable/gray_radio" android:layout_weight="1" />
+		<RadioButton android:id="@+id/pinkPre" android:button="@drawable/pink_radio" android:layout_weight="1" />
+	</RadioGroup>
+	<TextView android:text="Is closer than... " android:textSize="25sp"
+		android:layout_width="match_parent"	android:layout_height="wrap_content" />
+	<RadioGroup android:id="@+id/postButtons" android:orientation="horizontal"
+		android:layout_height="match_parent" android:layout_width="match_parent" android:padding="30dip" >
+		<RadioButton android:id="@+id/redPost" android:button="@drawable/red_radio" android:layout_weight="1" />
+		<RadioButton android:id="@+id/orangePost" android:button="@drawable/orange_radio" android:layout_weight="1" />
+		<RadioButton android:id="@+id/yellowPost" android:button="@drawable/yellow_radio" android:layout_weight="1" />
+		<RadioButton android:id="@+id/greenPost" android:button="@drawable/green_radio" android:layout_weight="1" />
+		<RadioButton android:id="@+id/bluePost" android:button="@drawable/blue_radio" android:layout_weight="1" />
+		<RadioButton android:id="@+id/purplePost" android:button="@drawable/purple_radio" android:layout_weight="1" />
+		<RadioButton android:id="@+id/brownPost" android:button="@drawable/brown_radio" android:layout_weight="1" />
+		<RadioButton android:id="@+id/grayPost" android:button="@drawable/gray_radio" android:layout_weight="1" />
+		<RadioButton android:id="@+id/pinkPost" android:button="@drawable/pink_radio" android:layout_weight="1" />
+	</RadioGroup>  
+	<LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+		android:orientation="horizontal">
+		<Button android:id="@+id/clearButton" android:text="Clear" 
+			android:layout_width="wrap_content"	android:layout_height="wrap_content" />
+		<Button android:id="@+id/contribButton" android:text="Contribute" 
+			android:layout_width="wrap_content"	android:layout_height="wrap_content" />
+	</LinearLayout>	
 </LinearLayout>
