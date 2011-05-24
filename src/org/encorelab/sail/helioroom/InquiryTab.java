@@ -31,6 +31,7 @@ public class InquiryTab extends Activity {
 	TextView vNote = null;
 	TextView vComment = null;
 	EditText vEdit = null;
+	String groupId = HelioroomLogin.groupId;						//set at login screen
 	
 	List<Inquiry> inqList = new ArrayList<Inquiry>();
 	List<Inquiry> discList = new ArrayList<Inquiry>();
@@ -102,7 +103,7 @@ public class InquiryTab extends Activity {
 					Inquiry i = new Inquiry();
 					//i.setInqId(some int inqId);
 					i.setInqType("question");
-					// i.setGroup(inqGroup.getText().toString());
+					i.setInqGroup(groupId);
 					i.setInqTitle(qTitle.getText().toString());
 					i.setInqContent(qContent.getText().toString());
 					// i.setParent(inqParent.getText().toString());
@@ -116,7 +117,7 @@ public class InquiryTab extends Activity {
 					Inquiry i = new Inquiry();
 					//i.setInqId(some int inqId);
 					i.setInqType("discussion");				
-					// i.setGroup(inqGroup.getText().toString());
+					i.setInqGroup(groupId);
 					i.setInqTitle(dTitle.getText().toString());
 					i.setInqContent(dContent.getText().toString());
 					// i.setParent(inqParent.getText().toString());
@@ -131,7 +132,7 @@ public class InquiryTab extends Activity {
 				if (!inqList.isEmpty() || !discList.isEmpty()) {		//locks contrib button if the lists are empty
 					// i.setId(inqId.getText().toString());
 					currentInq.setInqType("inquiry with comments");			
-					// i.setGroup(inqGroup.getText().toString());
+					currentInq.setInqGroup(groupId);
 					currentInq.addInqComment(vEdit.getText().toString());
 					vComment.setText(currentInq.getInqComments());
 				}

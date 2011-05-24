@@ -39,7 +39,7 @@ public class Inquiry {
 		return inqContent;
 	}
 	public void addInqComment(String comment) {
-		this.inqComment += "\n" + this.inqGroup + comment;
+		this.inqComment += "\n" + this.inqGroup + ": " + comment;
 									//will also need a group ID or whatever, the above should work
 	}
 	public String getInqComments() {
