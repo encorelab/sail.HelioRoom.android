@@ -133,6 +133,8 @@ public class ObservationTab extends Activity {
 			
 			int relation = (preDigit*10) + postDigit;
 			o.setObsContent(relation);
+			((RadioGroup) findViewById(R.id.preButtons)).clearCheck();
+			((RadioGroup) findViewById(R.id.postButtons)).clearCheck();			
 		}
 	};
 		

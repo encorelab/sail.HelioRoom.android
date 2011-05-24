@@ -73,7 +73,7 @@ public class InquiryTab extends Activity {
 		//TODO:
 		//Get this working with Json out OBV rollcall/proto isnt working right now
 		//Do a little general formatting cleanup
-		//Do a log in screen
+		//Add a toast to let the idiots know theyve filled too many fields
 		//
 		//XML
 		//Add boxes around the three lists (LOW PRIORITY)
