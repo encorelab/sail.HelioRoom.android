@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-//import android.view.*;
 import android.util.Log;
 import android.view.*;
 import android.view.View.OnFocusChangeListener;
@@ -106,9 +105,6 @@ public class InquiryTab extends Activity implements Observer {
 		dList.setOnItemClickListener(onListClickDisc);
 		
 		
-		
-
-		
 		//TODO:
 		//Get this working with Json out OBV rollcall/proto isnt working right now
 		//Add a toast to let the idiots know theyve filled too many fields
@@ -125,7 +121,6 @@ public class InquiryTab extends Activity implements Observer {
 //		Helioroom.nt.disconnect();
 //		Helioroom.nt.interrupt();
 	}
-	
 	
 
 	// Called when the user clicks contribute button
@@ -155,9 +150,6 @@ public class InquiryTab extends Activity implements Observer {
 
 					service.sendGroupChat(ev.toString());
 					
-					//send to chat room (change to referencing the qList) FIXME
-					//Helioroom.nt.sendGroupChat(qTitle.getText().toString()+","+qContent.getText().toString());
-
 			}
 			// contrib for Disc
 			else if (qTitle.getText().toString().equals("") && qContent.getText().toString().equals("") && vEdit.getText().toString().equals("")
@@ -209,6 +201,7 @@ public class InquiryTab extends Activity implements Observer {
 			dTitle.setText("");
 			dContent.setText("");
 			vEdit.setText("");
+			
 		}
 	};
 	
@@ -243,7 +236,6 @@ public class InquiryTab extends Activity implements Observer {
 				long id) {
 
 			for (int x=0; x < discList.size(); x++) {
-// this is def the way to go		inqList.get(position).setBackgroundColor(Color.argb(0,0,0,0));
 				parent.getChildAt(x).setBackgroundColor(Color.argb(0,0,0,0));	//turn the background color off
 			}
 //			parent.getChildAt(selectedInqPos).setBackgroundColor(Color.argb(0,0,0,0));	//turn the background color off
@@ -346,7 +338,10 @@ public class InquiryTab extends Activity implements Observer {
             				android.os.Message msg = new android.os.Message();
             				msg.obj = i;
             				xmppHandler.dispatchMessage(msg);
+
             				qAdapter.notifyDataSetChanged();
+
+
             				
 //            				if (ev.getType() == "submit_inquiry") {
 //            				if (i.getInqType().equals("question")) {
