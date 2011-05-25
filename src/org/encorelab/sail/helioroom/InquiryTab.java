@@ -97,13 +97,19 @@ public class InquiryTab extends Activity {
 				//i.setInqId(some int inqId);
 				Log.d("HelioRoom", "Got inquiry!");
 				Inquiry i = (Inquiry) ev.getPayload(Inquiry.class);
-				
+				qAdapter.add(i);
+				qAdapter.notifyDataSetChanged();
+
+
 //				if (ev.getType() == "submit_inquiry") {
-//				if (inqType == "question") {
+//				if (i.getInqType().equals("question")) {
 //					qAdapter.add(i);
 //				}
-//				else if (inqType == "discussion") {
+//				else if (i.getInqType().equals("discussion")) {
 //					dAdapter.add(i);
+//				}
+//				else {
+//					Log.e("HelioRoom", "Issues");
 //				}
 //				else {							//inqType == "inquiry with comments"
 //					//iterate through lists, incList(x)
@@ -114,65 +120,10 @@ public class InquiryTab extends Activity {
 //						Inquiry tempInq = inqList.get(i);
 //						
 //					}
-				
-				
-				
-				
-				
-				qAdapter.add(i);
 			}
-			
-			
-			
 		});
 		
 		xmpp.connection.addPacketListener(listener, new PacketTypeFilter(Message.class));
-
-/*		Event types:
-		submit_inquiry
-		update_inquiry - don't need this, right? 
-		*/
-//		if (Helioroom.nt.isConnected()) {		
-//
-//		Event ev = Event.fromJson("{eventType:\"submit_inquiry\",payload:{inqComment:\", inqContent:\" inqGroup:\" inqTitle:\" inqType:\"}}"");
-//		Inquiry i = new Inquiry();
-//		i.setInqType(ev.getPayloadAsMap().get("inqType"));
-//		i.setInqGroup(ev.getPayloadAsMap().get("inqGroup"));
-//		i.setInqTitle(ev.getPayloadAsMap().get("inqTitle"));
-//		i.setInqContent(ev.getPayloadAsMap().get("inqContent"));
-//		i.setInqComment(ev.getPayloadAsMap().get("inqComment"));
-//		
-//		if (ev.getType() == "submit_inquiry") {
-//			if (inqType == "question") {
-//				qAdapter.add(i);
-//			}
-//			else if (inqType == "discussion") {
-//				dAdapter.add(i);
-//			}
-//			else {							//inqType == "inquiry with comments"
-//				//iterate through lists, incList(x)
-//
-//				inqList.contains(object)
-//				inqList.indexOf(object)
-//				for (int i=0; i<inqList.size(); i++) {
-//					Inquiry tempInq = inqList.get(i);
-//					
-//				}
-//				
-//				currentInq = inqList(x);
-//				currentInq.addInqComment(ev.getPayloadAsMap().get("inqComment"));
-//			}
-//					
-//
-
-
-//		Event ev = new Event("update_inquiry", i);			//will this just create a new, or overwrite?
-//		ev.toJson();
-		
-//		Event ev = Event.fromJson("{eventType:\"example\",payload:{alpha:\"Hello\",omega:\"Goodbye!\"}}")
-//		ev.getPayloadAsMap().get("alpha");  // ==> "Hello"
-//		ev.getPayloadAsMap().get("beta");   // ==> "Goodbye!"
-
 		
 		//TODO:
 		//Get this working with Json out OBV rollcall/proto isnt working right now
@@ -208,7 +159,7 @@ public class InquiryTab extends Activity {
 					i.setInqTitle(qTitle.getText().toString());
 					i.setInqContent(qContent.getText().toString());
 
-					qAdapter.add(i);
+//					qAdapter.add(i);
 					idCounter++;
 					
 					Event ev = new Event("submit_inquiry", i);
@@ -231,7 +182,7 @@ public class InquiryTab extends Activity {
 					i.setInqTitle(dTitle.getText().toString());
 					i.setInqContent(dContent.getText().toString());
 
-					dAdapter.add(i);
+//					dAdapter.add(i);
 					idCounter++;
 					
 					Event ev = new Event("submit_inquiry", i);
@@ -339,8 +290,9 @@ public class InquiryTab extends Activity {
 			}
 
 			holder.populateFrom(inqList.get(position));
-			
+
 			return (row);
+			
 		}
 	}
 
