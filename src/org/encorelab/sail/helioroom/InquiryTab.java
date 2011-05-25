@@ -9,7 +9,6 @@ import android.app.Activity;
 import android.app.TabActivity;
 import android.os.Bundle;
 import android.os.IBinder;
-//import android.view.*;
 import android.util.Log;
 import android.view.*;
 import android.view.View.OnFocusChangeListener;
@@ -98,28 +97,33 @@ public class InquiryTab extends Activity {
 				Log.d("HelioRoom", "Got inquiry!");
 				Inquiry i = (Inquiry) ev.getPayload(Inquiry.class);
 				qAdapter.add(i);
-				qAdapter.notifyDataSetChanged();
+//				qAdapter.notifyDataSetChanged();
 
-
-//				if (ev.getType() == "submit_inquiry") {
 //				if (i.getInqType().equals("question")) {
 //					qAdapter.add(i);
 //				}
 //				else if (i.getInqType().equals("discussion")) {
 //					dAdapter.add(i);
 //				}
-//				else {
-//					Log.e("HelioRoom", "Issues");
-//				}
-//				else {							//inqType == "inquiry with comments"
-//					//iterate through lists, incList(x)
-//
-//					inqList.contains(object)
-//					inqList.indexOf(object)
-//					for (int i=0; i<inqList.size(); i++) {
-//						Inquiry tempInq = inqList.get(i);
-//						
+//				else if (i.getInqType().equals("inquiry with comments")) {						//should this be the else?
+////lists start at 0, right? work the same as arrays?
+////to test, maybe take out second part of if after &&s					
+//			        int listPos = 0;
+//					while (listPos < inqList.size() && i.getInqType().equals("question")) {
+//						if ((inqList.get(listPos).getInqId() == i.getInqId()) && (inqList.get(listPos).getInqGroup().equals(i.getInqGroup()))) {
+//							qAdapter.insert(i, listPos);
+//						}
+//						listPos++;
 //					}
+//					listPos = 0;
+//					while (listPos < discList.size() && i.getInqType().equals("discussion")) {
+//						if ((inqList.get(listPos).getInqId() == i.getInqId()) && (inqList.get(listPos).getInqGroup().equals(i.getInqGroup()))) {
+//							dAdapter.insert(i, listPos);
+//						}
+//						listPos++;
+//					}
+//				}
+
 			}
 		});
 		
