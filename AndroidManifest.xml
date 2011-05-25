@@ -13,10 +13,10 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name="Helioroom" />
-		<activity android:name=".ObservationTab" />
-		<activity android:name=".HypothesisTab" />
-		<activity android:name=".InquiryTab" />
+		<activity android:name=".Helioroom" android:screenOrientation="portrait" />
+		<activity android:name=".ObservationTab" android:screenOrientation="portrait" />
+		<activity android:name=".HypothesisTab" android:screenOrientation="portrait" />
+		<activity android:name=".InquiryTab" android:screenOrientation="portrait" />
 		
 		<service android:name="XmppService"></service>
 	</application>

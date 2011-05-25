@@ -47,9 +47,6 @@ public class InquiryTab extends Activity {
 	//private XmppService service;
 	private XMPPThread xmpp;
 	
-
-    private boolean mBound = false;
-	
 	List<Inquiry> inqList = new ArrayList<Inquiry>();
 	List<Inquiry> discList = new ArrayList<Inquiry>();
 
@@ -57,6 +54,7 @@ public class InquiryTab extends Activity {
 	DiscussionAdapter dAdapter = null;
 
 	Inquiry currentInq = null;			//used for Inq Disc Viewer
+	int idCounter = 1;					//will this be reset every time this tab is opened (POTENTIAL BUG)
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -107,22 +105,51 @@ public class InquiryTab extends Activity {
 		
 		xmpp.connection.addPacketListener(listener, new PacketTypeFilter(Message.class));
 
-//		if (Helioroom.nt.isConnected()) {
-		
-//		Event ev = Event.fromJson("{eventType:\"submit_inquiry\",payload:{inqComment:\", ");
+/*		Event types:
+		submit_inquiry
+		update_inquiry - don't need this, right? 
+		*/
+//		if (Helioroom.nt.isConnected()) {		
+//
+//		Event ev = Event.fromJson("{eventType:\"submit_inquiry\",payload:{inqComment:\", inqContent:\" inqGroup:\" inqTitle:\" inqType:\"}}"");
+//		Inquiry i = new Inquiry();
+//		i.setInqType(ev.getPayloadAsMap().get("inqType"));
+//		i.setInqGroup(ev.getPayloadAsMap().get("inqGroup"));
+//		i.setInqTitle(ev.getPayloadAsMap().get("inqTitle"));
+//		i.setInqContent(ev.getPayloadAsMap().get("inqContent"));
+//		i.setInqComment(ev.getPayloadAsMap().get("inqComment"));
 //		
+//		if (ev.getType() == "submit_inquiry") {
+//			if (inqType == "question") {
+//				qAdapter.add(i);
+//			}
+//			else if (inqType == "discussion") {
+//				dAdapter.add(i);
+//			}
+//			else {							//inqType == "inquiry with comments"
+//				//iterate through lists, incList(x)
+//
+//				inqList.contains(object)
+//				inqList.indexOf(object)
+//				for (int i=0; i<inqList.size(); i++) {
+//					Inquiry tempInq = inqList.get(i);
+//					
+//				}
+//				
+//				currentInq = inqList(x);
+//				currentInq.addInqComment(ev.getPayloadAsMap().get("inqComment"));
+//			}
+//					
+//
+
+
+//		Event ev = new Event("update_inquiry", i);			//will this just create a new, or overwrite?
+//		ev.toJson();
+		
 //		Event ev = Event.fromJson("{eventType:\"example\",payload:{alpha:\"Hello\",omega:\"Goodbye!\"}}")
 //		ev.getPayloadAsMap().get("alpha");  // ==> "Hello"
 //		ev.getPayloadAsMap().get("beta");   // ==> "Goodbye!"
 
-		
-//		ev.getPayloadAsString();
-//		if (ev.getType() == "submit_inquiry") {
-//			ev.getPayloadAsMap().get
-//		}
-//		else {
-//			something;
-//		}
 		
 		//TODO:
 		//Get this working with Json out OBV rollcall/proto isnt working right now
@@ -150,53 +177,64 @@ public class InquiryTab extends Activity {
 			// contrib for Question
 			if (dTitle.getText().toString().equals("") && dContent.getText().toString().equals("") && vEdit.getText().toString().equals("")
 				&& !qTitle.getText().toString().equals("") && !qContent.getText().toString().equals("")) {
+					
 					Inquiry i = new Inquiry();
-					//i.setInqId(some int inqId);
+					i.setInqId(idCounter);
 					i.setInqType("question");
 					i.setInqGroup(groupId);
 					i.setInqTitle(qTitle.getText().toString());
 					i.setInqContent(qContent.getText().toString());
 
 					qAdapter.add(i);
+					idCounter++;
+					
 					Event ev = new Event("submit_inquiry", i);
 					ev.toJson();
+
 					xmpp.sendGroupChat(ev.toString());
 					
 					//send to chat room (change to referencing the qList) FIXME
 					//Helioroom.nt.sendGroupChat(qTitle.getText().toString()+","+qContent.getText().toString());
+
 			}
 			// contrib for Disc
 			else if (qTitle.getText().toString().equals("") && qContent.getText().toString().equals("") && vEdit.getText().toString().equals("")
 				&& !dTitle.getText().toString().equals("") && !dContent.getText().toString().equals("")) {
+					
 					Inquiry i = new Inquiry();
-					//i.setInqId(some int inqId);
+					i.setInqId(idCounter);
 					i.setInqType("discussion");				
 					i.setInqGroup(groupId);
 					i.setInqTitle(dTitle.getText().toString());
 					i.setInqContent(dContent.getText().toString());
 
 					dAdapter.add(i);
+					idCounter++;
+					
 					Event ev = new Event("submit_inquiry", i);
 					ev.toJson();
-					//send to chat room (change to referencing the dList) FIXME
-					//Helioroom.nt.sendGroupChat(dTitle.getText().toString()+","+dContent.getText().toString());
+					Helioroom.nt.sendGroupChat(ev.toString());
 			}
 			// contrib for Viewer (god this is ugly)
 			else if (qTitle.getText().toString().equals("") && qContent.getText().toString().equals("") &&
 				dTitle.getText().toString().equals("") && dContent.getText().toString().equals("") &&
 				!vEdit.getText().toString().equals("")) {
 				if (!inqList.isEmpty() || !discList.isEmpty()) {		//locks contrib button if the lists are empty
-					// i.setId(inqId.getText().toString());
+
 					currentInq.setInqType("inquiry with comments");			
 					currentInq.setInqGroup(groupId);
 					currentInq.addInqComment(vEdit.getText().toString());
 					vComment.setText(currentInq.getInqComments());
-//					Event ev = new Event("submit_inquiry", i);			//will this just create a new, or overwrite?
+//					Event ev = new Event("update_inquiry", i);			//will this just create a new, or overwrite?
 //					ev.toJson();
 				}
 			}
 
 			else {
+				Toast toast = Toast.makeText(InquiryTab.this, "Please make sure your question or comment contains both a title and a note", Toast.LENGTH_SHORT);
+				toast.setGravity(Gravity.CENTER|Gravity.CENTER, 0, 0);
+				toast.show();
+
 				qTitle.setText("");
 				qContent.setText("");
 				dTitle.setText("");

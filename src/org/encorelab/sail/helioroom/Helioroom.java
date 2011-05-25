@@ -2,6 +2,7 @@ package org.encorelab.sail.helioroom;
 
 import android.app.TabActivity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.widget.*;
 
@@ -15,8 +16,7 @@ public class Helioroom extends TabActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		
-//		XMPPThread nt = null;
+		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);			//this replaces the orientation stuff in the manifest that wasn't working
 
 //		 start XMPP connection
 		Helioroom.nt = new XMPPThread(

@@ -16,7 +16,6 @@ import org.jivesoftware.smack.filter.PacketTypeFilter;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
 
-import android.content.Context;
 import android.util.Log;
 
 /**
@@ -26,8 +25,6 @@ import android.util.Log;
  * @author Gugo
  */
 public class XMPPThread extends Thread {
-	private Context app;
-	
 	// Connection
 	protected XMPPConnection connection = null;
 	private static final String TAG = "HelioRoom";
