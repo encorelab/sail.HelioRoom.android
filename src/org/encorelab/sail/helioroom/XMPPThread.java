@@ -88,11 +88,12 @@ public class XMPPThread extends Thread {
 		}
 		
 		EventListener listener = new EventListener();
-		listener.addResponder("submitHypothesis", new EventResponder() {
-			public void triggered(Event ev) {
-				Log.d(TAG, "EVENT! "+ev.toJson());
-			}
-		});
+//		listener.addResponder("submitHypothesis", new EventResponder() {
+//			public void triggered(Event ev) {
+//				Log.d(TAG, "EVENT! "+ev.toJson());
+//			}
+//		});
+		listener.addResponder(new TestEventResponder());
 		
 		connection.addPacketListener(listener, new PacketTypeFilter(Message.class));
 		
