@@ -336,7 +336,7 @@ public class InquiryTab extends Activity implements Observer {
             				android.os.Message msg = new android.os.Message();
             				msg.obj = i;
             				xmppHandler.dispatchMessage(msg);
-            				qAdapter.invalidate();
+
             				qAdapter.notifyDataSetChanged();
 
 
