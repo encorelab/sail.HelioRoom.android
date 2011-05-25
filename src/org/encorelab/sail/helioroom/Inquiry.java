@@ -1,19 +1,19 @@
 package org.encorelab.sail.helioroom;
 
 public class Inquiry {
-	private int inqId;
+//	private int inqId;					//not sure if this is necessary... maybe later
 	private String inqType = "";
 	private String inqGroup = "";
 	private String inqTitle = "";
 	private String inqContent = "";
 	private String inqComment = "";
 	
-	public void setInqId(int inqId) {
-		this.inqId = inqId;
-	}
-	public int getInqId() {
-		return inqId;
-	}
+//	public void setInqId(int inqId) {
+//		this.inqId = inqId;
+//	}
+//	public int getInqId() {
+//		return inqId;
+//	}
 	public void setInqType(String inqType) {
 		this.inqType = inqType;
 	}

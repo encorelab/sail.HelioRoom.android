@@ -14,6 +14,14 @@ public class HelioroomLogin extends Activity implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
+
+//we should be logging in here, we may want to fix this later	
+//		XMPPThread nt = null;
+//		nt = new XMPPThread("test2",
+//		"a94a8fe5ccb19ba61c4c0873d391e987982fbbd3", "textNotifier",
+//		"s3@conference.proto.encorelab.org", "Heliotest1");
+//		nt.run();
+
 		
 		Button group1 = (Button) findViewById(R.id.button1);
 		group1.setOnClickListener(this);
