@@ -42,7 +42,7 @@ public class HelioroomLogin extends Activity implements OnClickListener {
     @Override  
     public void onClick(View v) {  
 		Intent intent = new Intent();
-		intent.setClass(HelioroomLogin.this, HelioroomTab.class);
+		intent.setClass(HelioroomLogin.this, Helioroom.class);
 
     	switch(v.getId()){  
         case R.id.button1:  

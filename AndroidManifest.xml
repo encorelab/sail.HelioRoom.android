@@ -13,7 +13,7 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name="HelioroomTab" />
+		<activity android:name="Helioroom" />
 		<activity android:name=".ObservationTab" />
 		<activity android:name=".HypothesisTab" />
 		<activity android:name=".InquiryTab" />

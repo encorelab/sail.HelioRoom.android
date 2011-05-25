@@ -3,6 +3,8 @@
  */
 package org.encorelab.sail.helioroom;
 
+import org.jivesoftware.smack.XMPPConnection;
+
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
@@ -19,10 +21,11 @@ public class XmppService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		nt = new XMPPThread("test2",
-				"109f4b3c50d7b0df729d299bc6f8e9ef9066971f", "MattAndroid",
-				"s3@conference.proto.encorelab.org", "Heliotest1");
-		nt.start();
+//		nt = new XMPPThread(
+//				"test2",
+//				"109f4b3c50d7b0df729d299bc6f8e9ef9066971f", "MattAndroid",
+//				"s3@conference.proto.encorelab.org", "Heliotest1");
+//		nt.start();
 	}
 
 	@Override
@@ -31,6 +34,7 @@ public class XmppService extends Service {
 		nt.disconnect();
 		nt.interrupt();
 	}
+	
 
 	public IBinder onBind(Intent i) {
 		return localBinder;
@@ -52,5 +56,9 @@ public class XmppService extends Service {
 
 	public void addObserver(Hypothesis hypo) {
 		nt.addObserver(hypo);
+	}
+	
+	public XMPPConnection getConnection() {
+		return nt.connection;
 	}
 }

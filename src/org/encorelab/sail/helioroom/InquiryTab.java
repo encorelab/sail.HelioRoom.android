@@ -2,22 +2,32 @@ package org.encorelab.sail.helioroom;
 
 
 import org.encorelab.sail.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import android.app.Activity;
 import android.app.TabActivity;
 import android.os.Bundle;
+import android.os.IBinder;
 //import android.view.*;
+import android.util.Log;
 import android.view.*;
 import android.view.View.OnFocusChangeListener;
 import android.widget.*;
 
 import org.encorelab.sail.helioroom.R;
+import org.encorelab.sail.helioroom.XmppService.LocalBinder;
 import org.jivesoftware.smack.*;
 import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode;
+import org.jivesoftware.smack.filter.PacketTypeFilter;
+import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smackx.*;
 import org.jivesoftware.smackx.muc.*;
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -34,6 +44,11 @@ public class InquiryTab extends Activity {
 	TextView vComment = null;
 	EditText vEdit = null;
 	String groupId = HelioroomLogin.groupId;						//set at login screen
+	//private XmppService service;
+	private XMPPThread xmpp;
+	
+
+    private boolean mBound = false;
 	
 	List<Inquiry> inqList = new ArrayList<Inquiry>();
 	List<Inquiry> discList = new ArrayList<Inquiry>();
@@ -45,6 +60,13 @@ public class InquiryTab extends Activity {
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		xmpp = new XMPPThread(
+				"test2",
+				"109f4b3c50d7b0df729d299bc6f8e9ef9066971f", "MattAndroid",
+				"s3@conference.proto.encorelab.org", "Heliotest1");
+		xmpp.start();
+		
 		setContentView(R.layout.inquiry);
 
 		qTitle = (EditText) findViewById(R.id.inqTitle);
@@ -68,6 +90,22 @@ public class InquiryTab extends Activity {
 
 		qList.setOnItemClickListener(onListClickInq);
 		dList.setOnItemClickListener(onListClickDisc);
+		
+		EventListener listener = new EventListener();
+		
+		listener.addResponder("submit_inquiry", new EventResponder() {
+			@Override
+			public void triggered(Event ev) {
+				//i.setInqId(some int inqId);
+				Log.d("HelioRoom", "Got inquiry!");
+				Inquiry i = (Inquiry) ev.getPayload(Inquiry.class);
+
+				qAdapter.add(i);
+			}
+			
+		});
+		
+		xmpp.connection.addPacketListener(listener, new PacketTypeFilter(Message.class));
 
 //		if (Helioroom.nt.isConnected()) {
 		
@@ -122,7 +160,7 @@ public class InquiryTab extends Activity {
 					qAdapter.add(i);
 					Event ev = new Event("submit_inquiry", i);
 					ev.toJson();
-					HelioroomTab.nt.sendGroupChat(ev.toString());
+					xmpp.sendGroupChat(ev.toString());
 					
 					//send to chat room (change to referencing the qList) FIXME
 					//Helioroom.nt.sendGroupChat(qTitle.getText().toString()+","+qContent.getText().toString());
@@ -286,5 +324,6 @@ public class InquiryTab extends Activity {
 //			content.setText(i.getInqContent());
 		}
 	}
+	
 
 }
