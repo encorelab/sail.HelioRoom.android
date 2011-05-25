@@ -62,7 +62,7 @@ public class InquiryTab extends Activity {
 		xmpp = new XMPPThread(
 				"test2",
 				"109f4b3c50d7b0df729d299bc6f8e9ef9066971f", "MattAndroid",
-				"s3@conference.proto.encorelab.org", "Heliotest1");
+				"s3@conference.proto.encorelab.org", HelioroomLogin.groupId);
 		xmpp.start();
 		
 		setContentView(R.layout.inquiry);
@@ -100,6 +100,8 @@ public class InquiryTab extends Activity {
 
 				qAdapter.add(i);
 			}
+			
+			
 			
 		});
 		
