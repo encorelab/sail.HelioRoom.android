@@ -145,6 +145,8 @@ public class InquiryTab extends Activity implements Observer {
 					i.setInqTitle(qTitle.getText().toString());
 					i.setInqContent(qContent.getText().toString());
 
+					qAdapter.add(i);
+					qAdapter.notifyDataSetChanged();
 //					qAdapter.add(i);
 					idCounter++;
 					
