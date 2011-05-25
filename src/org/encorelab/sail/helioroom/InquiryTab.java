@@ -5,10 +5,15 @@ import org.encorelab.sail.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+
 import android.app.Activity;
 import android.app.TabActivity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.util.Log;
 import android.view.*;
 import android.view.View.OnFocusChangeListener;
@@ -32,7 +37,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 
-public class InquiryTab extends Activity {
+public class InquiryTab extends Activity implements Observer {
 
 	EditText qTitle = null;
 	EditText qContent = null;
@@ -45,6 +50,9 @@ public class InquiryTab extends Activity {
 	String groupId = HelioroomLogin.groupId;						//set at login screen
 	//private XmppService service;
 	private XMPPThread xmpp;
+	private Handler xmppHandler;
+	private XmppService service;
+	
 	
 	List<Inquiry> inqList = new ArrayList<Inquiry>();
 	List<Inquiry> discList = new ArrayList<Inquiry>();
@@ -58,11 +66,19 @@ public class InquiryTab extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		xmpp = new XMPPThread(
-				"test2",
-				"109f4b3c50d7b0df729d299bc6f8e9ef9066971f", HelioroomLogin.groupId,
-				"s3@conference.proto.encorelab.org", HelioroomLogin.groupId);
-		xmpp.start();
+		
+		Intent intent = new Intent(this, XmppService.class);
+		getApplicationContext().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+		
+		xmppHandler = new Handler() {
+			public void handleMessage(android.os.Message msg) {
+				Log.d("HelioRoom", "handling message");
+				qAdapter.add((Inquiry) msg.obj);
+				Log.d("HelioRoom", "notifying qAdapter of data set changed");
+				qAdapter.notifyDataSetChanged();
+			}
+		};
+		
 		
 		setContentView(R.layout.inquiry);
 
@@ -88,46 +104,9 @@ public class InquiryTab extends Activity {
 		qList.setOnItemClickListener(onListClickInq);
 		dList.setOnItemClickListener(onListClickDisc);
 		
-		EventListener listener = new EventListener();
 		
-		listener.addResponder("submit_inquiry", new EventResponder() {
-			@Override
-			public void triggered(Event ev) {
-				//i.setInqId(some int inqId);
-				Log.d("HelioRoom", "Got inquiry!");
-				Inquiry i = (Inquiry) ev.getPayload(Inquiry.class);
-				qAdapter.add(i);
-//				qAdapter.notifyDataSetChanged();
 
-//				if (i.getInqType().equals("question")) {
-//					qAdapter.add(i);
-//				}
-//				else if (i.getInqType().equals("discussion")) {
-//					dAdapter.add(i);
-//				}
-//				else if (i.getInqType().equals("inquiry with comments")) {						//should this be the else?
-////lists start at 0, right? work the same as arrays?
-////to test, maybe take out second part of if after &&s					
-//			        int listPos = 0;
-//					while (listPos < inqList.size() && i.getInqType().equals("question")) {
-//						if ((inqList.get(listPos).getInqId() == i.getInqId()) && (inqList.get(listPos).getInqGroup().equals(i.getInqGroup()))) {
-//							qAdapter.insert(i, listPos);
-//						}
-//						listPos++;
-//					}
-//					listPos = 0;
-//					while (listPos < discList.size() && i.getInqType().equals("discussion")) {
-//						if ((inqList.get(listPos).getInqId() == i.getInqId()) && (inqList.get(listPos).getInqGroup().equals(i.getInqGroup()))) {
-//							dAdapter.insert(i, listPos);
-//						}
-//						listPos++;
-//					}
-//				}
 
-			}
-		});
-		
-		xmpp.connection.addPacketListener(listener, new PacketTypeFilter(Message.class));
 		
 		//TODO:
 		//Get this working with Json out OBV rollcall/proto isnt working right now
@@ -145,6 +124,8 @@ public class InquiryTab extends Activity {
 //		Helioroom.nt.disconnect();
 //		Helioroom.nt.interrupt();
 	}
+	
+	
 
 	// Called when the user clicks contribute button
 	private View.OnClickListener onInqSubmit = new View.OnClickListener() {
@@ -169,7 +150,7 @@ public class InquiryTab extends Activity {
 					Event ev = new Event("submit_inquiry", i);
 					ev.toJson();
 
-					xmpp.sendGroupChat(ev.toString());
+					service.sendGroupChat(ev.toString());
 					
 					//send to chat room (change to referencing the qList) FIXME
 					//Helioroom.nt.sendGroupChat(qTitle.getText().toString()+","+qContent.getText().toString());
@@ -191,7 +172,7 @@ public class InquiryTab extends Activity {
 					
 					Event ev = new Event("submit_inquiry", i);
 					ev.toJson();
-					xmpp.sendGroupChat(ev.toString());
+					service.sendGroupChat(ev.toString());
 			}
 			// contrib for Viewer (god this is ugly)
 			else if (qTitle.getText().toString().equals("") && qContent.getText().toString().equals("") &&
@@ -342,5 +323,63 @@ public class InquiryTab extends Activity {
 		}
 	}
 	
+	/** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection mConnection = new ServiceConnection() {
 
+            @Override
+            public void onServiceConnected(ComponentName className,
+                            IBinder serv) {
+                    LocalBinder binder = (LocalBinder) serv;
+                    service = binder.getService();
+                    
+                    EventListener listener = new EventListener();
+            		
+            		listener.addResponder("submit_inquiry", new EventResponder() {
+            			@Override
+            			public void triggered(Event ev) {
+            				//i.setInqId(some int inqId);
+            				Log.d("HelioRoom", "Got inquiry!");
+            				Inquiry i = (Inquiry) ev.getPayload(Inquiry.class);
+            				android.os.Message msg = new android.os.Message();
+            				msg.obj = i;
+            				xmppHandler.dispatchMessage(msg);
+            				qAdapter.notifyDataSetChanged();
+            				
+//            				if (ev.getType() == "submit_inquiry") {
+//            				if (i.getInqType().equals("question")) {
+//            					qAdapter.add(i);
+//            				}
+//            				else if (i.getInqType().equals("discussion")) {
+//            					dAdapter.add(i);
+//            				}
+//            				else {
+//            					Log.e("HelioRoom", "Issues");
+//            				}
+//            				else {							//inqType == "inquiry with comments"
+//            					//iterate through lists, incList(x)
+            //
+//            					inqList.contains(object)
+//            					inqList.indexOf(object)
+//            					for (int i=0; i<inqList.size(); i++) {
+//            						Inquiry tempInq = inqList.get(i);
+//            						
+//            					}
+            			}
+            		});
+            		
+            		service.getConnection().addPacketListener(listener, new PacketTypeFilter(Message.class));
+                    
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName cn) {
+                    
+            }
+    };
+
+	@Override
+	public void update(Observable observable, Object data) {
+		
+		Log.d("HelioRoom", "hit InquiryTabl.update()");
+	}
 }

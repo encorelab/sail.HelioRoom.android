@@ -16,23 +16,23 @@ import android.os.IBinder;
  */
 public class XmppService extends Service {
 	private final IBinder localBinder = new LocalBinder();
-	private XMPPThread nt = null;
+	private XMPPThread xmpp = null;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-//		nt = new XMPPThread(
-//				"test2",
-//				"109f4b3c50d7b0df729d299bc6f8e9ef9066971f", "MattAndroid",
-//				"s3@conference.proto.encorelab.org", "Heliotest1");
-//		nt.start();
+		xmpp = new XMPPThread(
+				"test2",
+				"109f4b3c50d7b0df729d299bc6f8e9ef9066971f", "MattAndroid",
+				"s3@conference.proto.encorelab.org", "Heliotest1");
+		xmpp.start();
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		nt.disconnect();
-		nt.interrupt();
+		xmpp.disconnect();
+		xmpp.interrupt();
 	}
 	
 
@@ -47,18 +47,18 @@ public class XmppService extends Service {
 	}
 
 	public void sendMessage(String dest, String message) {
-		nt.sendTo(dest, message);
+		xmpp.sendTo(dest, message);
 	}
 	
 	public void sendGroupChat(String message) {
-		nt.sendGroupChat(message);
+		xmpp.sendGroupChat(message);
 	}
 
 	public void addObserver(Hypothesis hypo) {
-		nt.addObserver(hypo);
+		xmpp.addObserver(hypo);
 	}
 	
 	public XMPPConnection getConnection() {
-		return nt.connection;
+		return xmpp.connection;
 	}
 }

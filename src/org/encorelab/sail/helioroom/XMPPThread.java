@@ -16,6 +16,7 @@ import org.jivesoftware.smack.filter.PacketTypeFilter;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
 
+import android.os.Handler;
 import android.util.Log;
 
 /**
@@ -29,6 +30,7 @@ public class XMPPThread extends Thread {
 	protected XMPPConnection connection = null;
 	private static final String TAG = "HelioRoom";
 	private Roster roster = null;
+
 	// Packet collector
 	
 	// Credentials
@@ -41,6 +43,7 @@ public class XMPPThread extends Thread {
 	private String conferenceJid = null;
 	// Data
 	private XMPPThreadObserver data = null;
+	private Handler handler = null;
 
 	public XMPPThread(String id, String password, String resource, String conference, String confId) {
 		XMPPConnection.DEBUG_ENABLED = true;
