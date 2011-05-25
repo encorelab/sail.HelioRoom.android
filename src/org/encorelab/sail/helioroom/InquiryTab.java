@@ -61,7 +61,7 @@ public class InquiryTab extends Activity {
 		
 		xmpp = new XMPPThread(
 				"test2",
-				"109f4b3c50d7b0df729d299bc6f8e9ef9066971f", "MattAndroid",
+				"109f4b3c50d7b0df729d299bc6f8e9ef9066971f", HelioroomLogin.groupId,
 				"s3@conference.proto.encorelab.org", HelioroomLogin.groupId);
 		xmpp.start();
 		
@@ -97,7 +97,28 @@ public class InquiryTab extends Activity {
 				//i.setInqId(some int inqId);
 				Log.d("HelioRoom", "Got inquiry!");
 				Inquiry i = (Inquiry) ev.getPayload(Inquiry.class);
-
+				
+//				if (ev.getType() == "submit_inquiry") {
+//				if (inqType == "question") {
+//					qAdapter.add(i);
+//				}
+//				else if (inqType == "discussion") {
+//					dAdapter.add(i);
+//				}
+//				else {							//inqType == "inquiry with comments"
+//					//iterate through lists, incList(x)
+//
+//					inqList.contains(object)
+//					inqList.indexOf(object)
+//					for (int i=0; i<inqList.size(); i++) {
+//						Inquiry tempInq = inqList.get(i);
+//						
+//					}
+				
+				
+				
+				
+				
 				qAdapter.add(i);
 			}
 			

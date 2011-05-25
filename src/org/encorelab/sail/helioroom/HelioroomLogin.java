@@ -46,22 +46,22 @@ public class HelioroomLogin extends Activity implements OnClickListener {
 
     	switch(v.getId()){  
         case R.id.button1:  
-        	groupId = "Group 1";
+        	groupId = "Group1";
             break;  
         case R.id.button2:  
-        	groupId = "Group 2";
+        	groupId = "Group2";
             break;
         case R.id.button3:  
-        	groupId = "Group 3";
+        	groupId = "Group3";
             break;  
         case R.id.button4:  
-        	groupId = "Group 4";
+        	groupId = "Group4";
             break;  
         case R.id.button5:  
-        	groupId = "Group 5";
+        	groupId = "Group5";
             break;  
         case R.id.button6:  
-        	groupId = "Group 6";
+        	groupId = "Group6";
             break;  
         case R.id.button7:  
         	groupId = "Teacher";
