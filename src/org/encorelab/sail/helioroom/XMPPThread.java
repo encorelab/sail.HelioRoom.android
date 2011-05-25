@@ -3,15 +3,20 @@
  */
 package org.encorelab.sail.helioroom;
 
+import org.encorelab.sail.Event;
+import org.encorelab.sail.EventListener;
+import org.encorelab.sail.EventResponder;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode;
-import org.jivesoftware.smack.PacketCollector;
 import org.jivesoftware.smack.Roster;
 import org.jivesoftware.smack.RosterEntry;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.filter.PacketTypeFilter;
 import org.jivesoftware.smack.packet.Message;
-import org.jivesoftware.smackx.muc.MultiUserChat;
+import org.jivesoftware.smack.packet.Presence;
+
+import android.util.Log;
 
 /**
  * Manages all the XMPP connections, incoming and outgoing messages. 
@@ -22,35 +27,35 @@ import org.jivesoftware.smackx.muc.MultiUserChat;
 public class XMPPThread extends Thread {
 	// Connection
 	protected XMPPConnection connection = null;
+	private static final String TAG = "HelioRoom";
 	private Roster roster = null;
 	// Packet collector
-	private PacketCollector pc = null;
+	
 	// Credentials
 	private String myId = null;
 	private String password = null;
 	private String resource = null;
 	// Chat room credentials
 	private String conferenceRoom = null;
-	private String conferenceId = null;
+	private String conferenceUsername = null;
+	private String conferenceJid = null;
 	// Data
 	private XMPPThreadObserver data = null;
-	private MultiUserChat room = null;
-	
 
 	public XMPPThread(String id, String password, String resource, String conference, String confId) {
+		XMPPConnection.DEBUG_ENABLED = true;
 		this.myId = id;
 		this.password = password;
 		this.resource = resource;
 		this.conferenceRoom = conference;
-		this.conferenceId = confId;
+		this.conferenceUsername = confId;
+		this.conferenceJid = this.conferenceRoom+"/"+this.conferenceUsername+"-"+this.getId();
 	}
 	
 	
 	@Override
 	public void run() {
-		if (connect()) {
-			listen();
-		}
+		connect();
 	}
 	
 
@@ -67,26 +72,33 @@ public class XMPPThread extends Thread {
 		}
 		ConnectionConfiguration config = 
 			new ConnectionConfiguration("proto.encorelab.org", Integer.parseInt("5222"));
-		//config.setSASLAuthenticationEnabled(false);
+		config.setSASLAuthenticationEnabled(true);
 		config.setSecurityMode(SecurityMode.disabled);
 		connection = new XMPPConnection(config);
+		
 		try {
 			// Connect
+			Log.d(TAG, "Connecting to XMPP...");
 			connection.connect();
 			connection.login(myId, password, resource);
 		} catch (XMPPException e) {
-			System.err.println("Impossible to connect to the XMPP server.");
+			Log.e(TAG, "Impossible to connect to the XMPP server.");
 			connection = null;
 			return false;
 		}
 		
-		room = new MultiUserChat(connection, conferenceRoom);
-		try {
-			room.join(conferenceId);				//might this be useful for group id?
-		} catch (XMPPException e) {
-			e.printStackTrace();
-			return false;
-		}
+		EventListener listener = new EventListener();
+		listener.addResponder("submitHypothesis", new EventResponder() {
+			public void triggered(Event ev) {
+				Log.d(TAG, "EVENT! "+ev.toJson());
+			}
+		});
+		
+		connection.addPacketListener(listener, new PacketTypeFilter(Message.class));
+		
+		joinGroupChat();
+		sendGroupChat("Here!");
+
 
 		roster = connection.getRoster();
 		return true;
@@ -99,27 +111,20 @@ public class XMPPThread extends Thread {
 	 * @param myId Unique identifier of the phenomena.
 	 */
 	public boolean disconnect() {
-		if (room!=null) {
-			room.leave();
-		}
-		
 		if (connection==null) {
 			return false;
 		}
 		connection.disconnect();
-		connection=null;
+		connection = null;
 		return true;
 	}
 	
 	
-	public void listen() {
-		pc = connection.createPacketCollector(null);
-		String currentPacket = null;
-		while(!Thread.currentThread().isInterrupted()) {
-			currentPacket = pc.nextResult().toXML();
-			if(currentPacket!=null && data!=null)
-				data.parse(currentPacket);
-		}
+	public void joinGroupChat() {
+		Presence p = new Presence(Presence.Type.available);
+		p.setStatus("chat");
+		p.setTo(this.conferenceJid);
+		connection.sendPacket(p);
 	}
 
 
@@ -149,16 +154,17 @@ public class XMPPThread extends Thread {
 	 * @param message Message to be sent
 	 */
 	public void sendGroupChat(String message) {
-		if (room==null || !isConnected()){
+		if (connection==null || !isConnected()){
 			System.err.println("Impossible to send message: this device isn't connected anymore!");
 			return;
 		}
-		try {
-			room.sendMessage(message);
-		}
-		catch(XMPPException e) {
-			e.printStackTrace();
-		}
+		
+		Message m = new Message(message, Message.Type.groupchat);
+		m.setTo(this.conferenceRoom);
+		m.setBody(message);
+		connection.sendPacket(m);
+
+
 //		Message m = new Message();
 //		m.setFrom(myId);
 //		m.setTo(dest);
@@ -197,7 +203,8 @@ public class XMPPThread extends Thread {
 	public boolean isConnected() {
 		return connection.isConnected() && connection.isAuthenticated();
 	}
-
+	
+	
 
 	public void addObserver(XMPPThreadObserver hr) {
 		this.data  = hr;

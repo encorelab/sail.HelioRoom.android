@@ -20,7 +20,7 @@ public class XmppService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		nt = new XMPPThread("test2",
-				"a94a8fe5ccb19ba61c4c0873d391e987982fbbd3", "textNotifier",
+				"109f4b3c50d7b0df729d299bc6f8e9ef9066971f", "MattAndroid",
 				"s3@conference.proto.encorelab.org", "Heliotest1");
 		nt.start();
 	}
