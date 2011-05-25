@@ -122,7 +122,7 @@ public class InquiryTab extends Activity {
 					qAdapter.add(i);
 					Event ev = new Event("submit_inquiry", i);
 					ev.toJson();
-					Helioroom.nt.sendGroupChat(ev.toString());
+					HelioroomTab.nt.sendGroupChat(ev.toString());
 					
 					//send to chat room (change to referencing the qList) FIXME
 					//Helioroom.nt.sendGroupChat(qTitle.getText().toString()+","+qContent.getText().toString());
