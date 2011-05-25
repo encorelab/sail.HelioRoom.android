@@ -10,7 +10,7 @@ import android.widget.*;
 public class Helioroom extends TabActivity {
 	// this is a class variable that all tabs can use to
 	// send and receive XMPP messages
-	static XMPPThread nt = null;
+//	static XMPPThread nt = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -19,11 +19,11 @@ public class Helioroom extends TabActivity {
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);			//this replaces the orientation stuff in the manifest that wasn't working
 
 //		 start XMPP connection
-		Helioroom.nt = new XMPPThread(
-				"test1",
-				"b444ac06613fc8d63795be9ad0beaf55011936ac", "textNotifier",
-				"s3@conference.proto.encorelab.org", HelioroomLogin.groupId);
-		Helioroom.nt.start();
+//		Helioroom.nt = new XMPPThread(
+//				"test1",
+//				"b444ac06613fc8d63795be9ad0beaf55011936ac", "textNotifier",
+//				"s3@conference.proto.encorelab.org", HelioroomLogin.groupId);
+//		Helioroom.nt.start();
 	
 		TabHost tabHost = getTabHost();
 		TabHost.TabSpec spec;

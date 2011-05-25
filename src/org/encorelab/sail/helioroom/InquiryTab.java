@@ -215,7 +215,7 @@ public class InquiryTab extends Activity {
 					
 					Event ev = new Event("submit_inquiry", i);
 					ev.toJson();
-					Helioroom.nt.sendGroupChat(ev.toString());
+					xmpp.sendGroupChat(ev.toString());
 			}
 			// contrib for Viewer (god this is ugly)
 			else if (qTitle.getText().toString().equals("") && qContent.getText().toString().equals("") &&
