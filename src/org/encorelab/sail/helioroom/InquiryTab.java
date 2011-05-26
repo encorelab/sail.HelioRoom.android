@@ -190,8 +190,7 @@ public class InquiryTab extends Activity {
 			else if (qTitle.getText().toString().equals("") && qContent.getText().toString().equals("") &&
 				dTitle.getText().toString().equals("") && dContent.getText().toString().equals("") &&
 				!vEdit.getText().toString().equals("")) {
-				if (!inqList.isEmpty() || !discList.isEmpty()) {		//locks contrib button if the lists are empty
-
+				if ((!inqList.isEmpty() || !discList.isEmpty()) && (!vTitle.getText().equals(""))) {		//locks contrib button if the lists are empty
 					//currentInq.setInqType("question with comments")			
 					currentInq.setInqGroup(groupId);
 					currentInq.addInqComment(vEdit.getText().toString());
