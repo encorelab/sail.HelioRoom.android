@@ -37,7 +37,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 
-public class InquiryTab extends Activity implements Observer {
+public class InquiryTab extends Activity {
 
 	EditText qTitle = null;
 	EditText qContent = null;
@@ -65,37 +65,38 @@ public class InquiryTab extends Activity implements Observer {
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-				
+		
+		
 		Intent intent = new Intent(this, XmppService.class);
 		getApplicationContext().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-		
-		xmppHandler = new Handler() {
-			public void handleMessage(android.os.Message msg) {
-				if (msg.arg1 == 1) {
-					Log.d("HelioRoom", "handling message");
-					qAdapter.add((Inquiry) msg.obj);
-					Log.d("HelioRoom", "notifying qAdapter of data set changed");
-				}
-				if (msg.arg1 == 2) {
-					Log.d("HelioRoom", "handling message");
-					dAdapter.add((Inquiry) msg.obj);
-					Log.d("HelioRoom", "notifying dAdapter of data set changed");
-				}
-				if (msg.arg1 == 3) {
-					Log.d("HelioRoom", "handling message");
-					qAdapter.insert((Inquiry) msg.obj, msg.arg2);
-					Log.d("HelioRoom", "notifying dAdapter of data set changed");
-				}
-				if (msg.arg1 == 4) {
-					Log.d("HelioRoom", "handling message");
-					dAdapter.insert((Inquiry) msg.obj, msg.arg2);
-					Log.d("HelioRoom", "notifying dAdapter of data set changed");
-				}
-
-
-				qAdapter.notifyDataSetChanged();
-			}
-		};
+//		
+//		xmppHandler = new Handler() {
+//			public void handleMessage(android.os.Message msg) {
+//				if (msg.arg1 == 1) {
+//					Log.d("HelioRoom", "handling message");
+//					qAdapter.add((Inquiry) msg.obj);
+//					Log.d("HelioRoom", "notifying qAdapter of data set changed");
+//				}
+//				if (msg.arg1 == 2) {
+//					Log.d("HelioRoom", "handling message");
+//					dAdapter.add((Inquiry) msg.obj);
+//					Log.d("HelioRoom", "notifying dAdapter of data set changed");
+//				}
+//				if (msg.arg1 == 3) {
+//					Log.d("HelioRoom", "handling message");
+//					qAdapter.insert((Inquiry) msg.obj, msg.arg2);
+//					Log.d("HelioRoom", "notifying dAdapter of data set changed");
+//				}
+//				if (msg.arg1 == 4) {
+//					Log.d("HelioRoom", "handling message");
+//					dAdapter.insert((Inquiry) msg.obj, msg.arg2);
+//					Log.d("HelioRoom", "notifying dAdapter of data set changed");
+//				}
+//
+//
+//				qAdapter.notifyDataSetChanged();
+//			}
+//		};
 		
 		
 		setContentView(R.layout.inquiry);
@@ -158,7 +159,7 @@ public class InquiryTab extends Activity implements Observer {
 					i.setInqTitle(qTitle.getText().toString());
 					i.setInqContent(qContent.getText().toString());
 
-					//qAdapter.add(i);
+					qAdapter.add(i);
 					idCounter++;
 
 					Event ev = new Event("submit_inquiry", i);
@@ -178,7 +179,7 @@ public class InquiryTab extends Activity implements Observer {
 					i.setInqTitle(dTitle.getText().toString());
 					i.setInqContent(dContent.getText().toString());
 
-					//dAdapter.add(i);
+					dAdapter.add(i);
 					idCounter++;
 								
 					Event ev = new Event("submit_inquiry", i);
@@ -191,12 +192,13 @@ public class InquiryTab extends Activity implements Observer {
 				!vEdit.getText().toString().equals("")) {
 				if (!inqList.isEmpty() || !discList.isEmpty()) {		//locks contrib button if the lists are empty
 
-					currentInq.setInqType("inquiry with comments");			
+					//currentInq.setInqType("question with comments")			
 					currentInq.setInqGroup(groupId);
 					currentInq.addInqComment(vEdit.getText().toString());
 					vComment.setText(currentInq.getInqComments());
-//					Event ev = new Event("update_inquiry", i);			//will this just create a new, or overwrite?
-//					ev.toJson();
+					Event ev = new Event("update_inquiry", currentInq);			//will this just create a new, or overwrite?
+					ev.toJson();
+					service.sendGroupChat(ev.toString());
 				}
 			}
 
@@ -341,62 +343,62 @@ public class InquiryTab extends Activity implements Observer {
                             IBinder serv) {
                     LocalBinder binder = (LocalBinder) serv;
                     service = binder.getService();
-                    
-                    EventListener listener = new EventListener();
-            		
-            		listener.addResponder("submit_inquiry", new EventResponder() {
-            			@Override
-            			public void triggered(Event ev) {
-            				//i.setInqId(some int inqId);
-            				Log.d("HelioRoom", "Got inquiry!");
-            				Inquiry i = (Inquiry) ev.getPayload(Inquiry.class);
-            				android.os.Message msg = new android.os.Message();
-            				
-            			if (i.getInqType().equals("question")) {
-        					//qAdapter.add(i);
-            				msg.arg1 = 1;
-            				msg.obj = i;
-        				}
-        				else if (i.getInqType().equals("discussion")) {
-        					//dAdapter.add(i);
-        					msg.arg1 = 2;
-        					msg.obj = i;
-        				}
-        				else if (i.getInqType().equals("inquiry with comments")) {						//should this be the else?
-
-        			        int listPos = 0;
-        					//iterates through the inq list, checking for an Inquiry with matching inqId and inqType
-        			        while (listPos < inqList.size() && i.getInqType().equals("question")) {
-        						if ((inqList.get(listPos).getInqId() == i.getInqId()) && (inqList.get(listPos).getInqGroup().equals(i.getInqGroup()))) {
-        							//qAdapter.insert(i, listPos);
-        							msg.arg1 = 3;
-        							msg.obj = i;
-        							msg.arg2 = listPos;
-        						}
-        						listPos++;
-        					}
-        					listPos = 0;
-        					//iterates through the disc list, checking for an Inquiry with matching inqId and inqType
-        					while (listPos < discList.size() && i.getInqType().equals("discussion")) {
-        						if ((inqList.get(listPos).getInqId() == i.getInqId()) && (inqList.get(listPos).getInqGroup().equals(i.getInqGroup()))) {
-        							//dAdapter.insert(i, listPos);
-        							msg.arg1 = 4;
-        							msg.obj = i;
-        							msg.arg2 = listPos;
-        						}
-        						listPos++;
-        					}
-        				}
-
-        				xmppHandler.dispatchMessage(msg);
-        				
-        				qAdapter.notifyDataSetChanged();
-
-            			
-            			}
-            		});
-            		
-            		service.getConnection().addPacketListener(listener, new PacketTypeFilter(Message.class));
+//                    
+//                    EventListener listener = new EventListener();
+//            		
+//            		listener.addResponder("submit_inquiry", new EventResponder() {
+//            			@Override
+//            			public void triggered(Event ev) {
+//            				//i.setInqId(some int inqId);
+//            				Log.d("HelioRoom", "Got inquiry!");
+//            				Inquiry i = (Inquiry) ev.getPayload(Inquiry.class);
+//            				android.os.Message msg = new android.os.Message();
+//            				
+//            			if (i.getInqType().equals("question")) {
+//        					//qAdapter.add(i);
+//            				msg.arg1 = 1;
+//            				msg.obj = i;
+//        				}
+//        				else if (i.getInqType().equals("discussion")) {
+//        					//dAdapter.add(i);
+//        					msg.arg1 = 2;
+//        					msg.obj = i;
+//        				}
+//        				else if (i.getInqType().equals("inquiry with comments")) {						//should this be the else?
+//
+//        			        int listPos = 0;
+//        					//iterates through the inq list, checking for an Inquiry with matching inqId and inqType
+//        			        while (listPos < inqList.size() && i.getInqType().equals("question")) {
+//        						if ((inqList.get(listPos).getInqId() == i.getInqId()) && (inqList.get(listPos).getInqGroup().equals(i.getInqGroup()))) {
+//        							//qAdapter.insert(i, listPos);
+//        							msg.arg1 = 3;
+//        							msg.obj = i;
+//        							msg.arg2 = listPos;
+//        						}
+//        						listPos++;
+//        					}
+//        					listPos = 0;
+//        					//iterates through the disc list, checking for an Inquiry with matching inqId and inqType
+//        					while (listPos < discList.size() && i.getInqType().equals("discussion")) {
+//        						if ((inqList.get(listPos).getInqId() == i.getInqId()) && (inqList.get(listPos).getInqGroup().equals(i.getInqGroup()))) {
+//        							//dAdapter.insert(i, listPos);
+//        							msg.arg1 = 4;
+//        							msg.obj = i;
+//        							msg.arg2 = listPos;
+//        						}
+//        						listPos++;
+//        					}
+//        				}
+//
+//        				xmppHandler.dispatchMessage(msg);
+//        				
+//        				qAdapter.notifyDataSetChanged();
+//
+//            			
+//            			}
+//            		});
+//            		
+//            		service.getConnection().addPacketListener(listener, new PacketTypeFilter(Message.class));
                     
             }
 
@@ -406,9 +408,9 @@ public class InquiryTab extends Activity implements Observer {
             }
     };
 
-	@Override
-	public void update(Observable observable, Object data) {
-		
-		Log.d("HelioRoom", "hit InquiryTabl.update()");
-	}
+//	@Override
+//	public void update(Observable observable, Object data) {
+//		
+//		Log.d("HelioRoom", "hit InquiryTabl.update()");
+//	}
 }
