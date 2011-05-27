@@ -118,8 +118,8 @@ public class InquiryTab extends Activity implements Observer {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-//		Helioroom.nt.disconnect();
-//		Helioroom.nt.interrupt();
+//		HelioroomTab.nt.disconnect();
+//		HelioroomTab.nt.interrupt();
 	}
 	
 

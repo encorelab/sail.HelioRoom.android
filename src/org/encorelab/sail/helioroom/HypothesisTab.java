@@ -96,11 +96,11 @@ public class HypothesisTab extends Activity implements Observer {
 	private View.OnClickListener onSubmit = new View.OnClickListener() {
 		public void onClick(View v) {			
 			// sending message to the chat room
-			//Helioroom.nt.sendGroupChat(sendChat.getText().toString());
+			//HelioroomTab.nt.sendGroupChat(sendChat.getText().toString());
 			
 			// FIXME adding observer in onCreate fails, here it is not
 			// the right place either :/
-			//Helioroom.nt.addObserver(hypo);
+			//HelioroomTab.nt.addObserver(hypo);
 			
 			Event ev = new Event("submitHypothesis", sendChat.getText().toString());
 			
@@ -152,7 +152,7 @@ public class HypothesisTab extends Activity implements Observer {
                     LocalBinder binder = (LocalBinder) serv;
                     service = binder.getService();
                     mBound = true;
-                    // Link to Helioroom model
+                    // Link to HelioroomTab model
                     service.addObserver(hypo);
             }
 
