@@ -19,8 +19,9 @@ import android.view.*;
 import android.view.View.OnFocusChangeListener;
 import android.widget.*;
 
+import org.encorelab.sail.android.xmpp.XMPPService;
+import org.encorelab.sail.android.xmpp.XMPPService.LocalBinder;
 import org.encorelab.sail.helioroom.R;
-import org.encorelab.sail.helioroom.XmppService.LocalBinder;
 import org.jivesoftware.smack.*;
 import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode;
 import org.jivesoftware.smack.filter.PacketTypeFilter;
@@ -51,7 +52,7 @@ public class InquiryTab extends Activity implements Observer {
 	//private XmppService service;
 	private XMPPThread xmpp;
 	private Handler xmppHandler;
-	private XmppService service;
+	private XMPPService xmppService;
 	
 	
 	List<Inquiry> inqList = new ArrayList<Inquiry>();
@@ -65,31 +66,30 @@ public class InquiryTab extends Activity implements Observer {
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-				
-		Intent intent = new Intent(this, XmppService.class);
-		getApplicationContext().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+		
+		Helioroom.bindToXMPPService(this, xmppServiceConnection);
 		
 		xmppHandler = new Handler() {
 			public void handleMessage(android.os.Message msg) {
 				if (msg.arg1 == 1) {
-					Log.d("HelioRoom", "handling message");
+					Log.d(Helioroom.TAG, "handling message");
 					qAdapter.add((Inquiry) msg.obj);
-					Log.d("HelioRoom", "notifying qAdapter of data set changed");
+					Log.d(Helioroom.TAG, "notifying qAdapter of data set changed");
 				}
 				if (msg.arg1 == 2) {
-					Log.d("HelioRoom", "handling message");
+					Log.d(Helioroom.TAG, "handling message");
 					dAdapter.add((Inquiry) msg.obj);
-					Log.d("HelioRoom", "notifying dAdapter of data set changed");
+					Log.d(Helioroom.TAG, "notifying dAdapter of data set changed");
 				}
 				if (msg.arg1 == 3) {
-					Log.d("HelioRoom", "handling message");
+					Log.d(Helioroom.TAG, "handling message");
 					qAdapter.insert((Inquiry) msg.obj, msg.arg2);
-					Log.d("HelioRoom", "notifying dAdapter of data set changed");
+					Log.d(Helioroom.TAG, "notifying dAdapter of data set changed");
 				}
 				if (msg.arg1 == 4) {
-					Log.d("HelioRoom", "handling message");
+					Log.d(Helioroom.TAG, "handling message");
 					dAdapter.insert((Inquiry) msg.obj, msg.arg2);
-					Log.d("HelioRoom", "notifying dAdapter of data set changed");
+					Log.d(Helioroom.TAG, "notifying dAdapter of data set changed");
 				}
 
 
@@ -162,9 +162,8 @@ public class InquiryTab extends Activity implements Observer {
 					idCounter++;
 
 					Event ev = new Event("submit_inquiry", i);
-					ev.toJson();
 
-					service.sendGroupChat(ev.toString());
+					xmppService.sendEvent(ev);
 					
 			}
 			// contrib for Disc
@@ -182,8 +181,8 @@ public class InquiryTab extends Activity implements Observer {
 					idCounter++;
 								
 					Event ev = new Event("submit_inquiry", i);
-					ev.toJson();
-					service.sendGroupChat(ev.toString());
+					
+					xmppService.sendEvent(ev);
 			}
 			// contrib for Viewer (god this is ugly)
 			else if (qTitle.getText().toString().equals("") && qContent.getText().toString().equals("") &&
@@ -333,82 +332,91 @@ public class InquiryTab extends Activity implements Observer {
 		}
 	}
 	
-	/** Defines callbacks for service binding, passed to bindService() */
-    private ServiceConnection mConnection = new ServiceConnection() {
+	private ServiceConnection xmppServiceConnection = new ServiceConnection() {
 
-            @Override
-            public void onServiceConnected(ComponentName className,
-                            IBinder serv) {
-                    LocalBinder binder = (LocalBinder) serv;
-                    service = binder.getService();
-                    
-                    EventListener listener = new EventListener();
-            		
-            		listener.addResponder("submit_inquiry", new EventResponder() {
-            			@Override
-            			public void triggered(Event ev) {
-            				//i.setInqId(some int inqId);
-            				Log.d("HelioRoom", "Got inquiry!");
-            				Inquiry i = (Inquiry) ev.getPayload(Inquiry.class);
-            				android.os.Message msg = new android.os.Message();
-            				
-            			if (i.getInqType().equals("question")) {
-        					//qAdapter.add(i);
-            				msg.arg1 = 1;
-            				msg.obj = i;
-        				}
-        				else if (i.getInqType().equals("discussion")) {
-        					//dAdapter.add(i);
-        					msg.arg1 = 2;
-        					msg.obj = i;
-        				}
-        				else if (i.getInqType().equals("inquiry with comments")) {						//should this be the else?
+		@Override
+		public void onServiceConnected(ComponentName className, IBinder serv) {
+			LocalBinder binder = (LocalBinder) serv;
+			xmppService = binder.getService();
 
-        			        int listPos = 0;
-        					//iterates through the inq list, checking for an Inquiry with matching inqId and inqType
-        			        while (listPos < inqList.size() && i.getInqType().equals("question")) {
-        						if ((inqList.get(listPos).getInqId() == i.getInqId()) && (inqList.get(listPos).getInqGroup().equals(i.getInqGroup()))) {
-        							//qAdapter.insert(i, listPos);
-        							msg.arg1 = 3;
-        							msg.obj = i;
-        							msg.arg2 = listPos;
-        						}
-        						listPos++;
-        					}
-        					listPos = 0;
-        					//iterates through the disc list, checking for an Inquiry with matching inqId and inqType
-        					while (listPos < discList.size() && i.getInqType().equals("discussion")) {
-        						if ((inqList.get(listPos).getInqId() == i.getInqId()) && (inqList.get(listPos).getInqGroup().equals(i.getInqGroup()))) {
-        							//dAdapter.insert(i, listPos);
-        							msg.arg1 = 4;
-        							msg.obj = i;
-        							msg.arg2 = listPos;
-        						}
-        						listPos++;
-        					}
-        				}
+			EventListener listener = new EventListener();
 
-        				xmppHandler.dispatchMessage(msg);
-        				
-        				qAdapter.notifyDataSetChanged();
+			listener.addResponder("submit_inquiry", new EventResponder() {
+				@Override
+				public void triggered(Event ev) {
+					// i.setInqId(some int inqId);
+					Log.d(Helioroom.TAG, "Got inquiry!");
+					Inquiry i = (Inquiry) ev.getPayload(Inquiry.class);
+					android.os.Message msg = new android.os.Message();
 
-            			
-            			}
-            		});
-            		
-            		service.getConnection().addPacketListener(listener, new PacketTypeFilter(Message.class));
-                    
-            }
+					if (i.getInqType().equals("question")) {
+						// qAdapter.add(i);
+						msg.arg1 = 1;
+						msg.obj = i;
+					} else if (i.getInqType().equals("discussion")) {
+						// dAdapter.add(i);
+						msg.arg1 = 2;
+						msg.obj = i;
+					} else if (i.getInqType().equals("inquiry with comments")) { // should
+																					// this
+																					// be
+																					// the
+																					// else?
 
-            @Override
-            public void onServiceDisconnected(ComponentName cn) {
-                    
-            }
-    };
+						int listPos = 0;
+						// iterates through the inq list, checking for an
+						// Inquiry with matching inqId and inqType
+						while (listPos < inqList.size()
+								&& i.getInqType().equals("question")) {
+							if ((inqList.get(listPos).getInqId() == i
+									.getInqId())
+									&& (inqList.get(listPos).getInqGroup()
+											.equals(i.getInqGroup()))) {
+								// qAdapter.insert(i, listPos);
+								msg.arg1 = 3;
+								msg.obj = i;
+								msg.arg2 = listPos;
+							}
+							listPos++;
+						}
+						listPos = 0;
+						// iterates through the disc list, checking for an
+						// Inquiry with matching inqId and inqType
+						while (listPos < discList.size()
+								&& i.getInqType().equals("discussion")) {
+							if ((inqList.get(listPos).getInqId() == i
+									.getInqId())
+									&& (inqList.get(listPos).getInqGroup()
+											.equals(i.getInqGroup()))) {
+								// dAdapter.insert(i, listPos);
+								msg.arg1 = 4;
+								msg.obj = i;
+								msg.arg2 = listPos;
+							}
+							listPos++;
+						}
+					}
+
+					xmppHandler.dispatchMessage(msg);
+
+					qAdapter.notifyDataSetChanged();
+
+				}
+			});
+
+			xmppService.addEventListener(listener);
+
+		}
+
+		@Override
+		public void onServiceDisconnected(ComponentName cn) {
+
+		}
+	};
 
 	@Override
 	public void update(Observable observable, Object data) {
 		
-		Log.d("HelioRoom", "hit InquiryTabl.update()");
+		Log.d(Helioroom.TAG, "hit InquiryTabl.update()");
 	}
 }

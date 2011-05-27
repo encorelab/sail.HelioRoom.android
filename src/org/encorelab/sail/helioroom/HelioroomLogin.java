@@ -1,8 +1,17 @@
 package org.encorelab.sail.helioroom;
 
+import org.encorelab.sail.android.xmpp.XMPPService;
+import org.encorelab.sail.android.xmpp.XMPPServiceIntent;
+import org.encorelab.sail.android.xmpp.XMPPService.LocalBinder;
+
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -10,10 +19,13 @@ import android.widget.Button;
 public class HelioroomLogin extends Activity implements OnClickListener {
 
 	static String groupId = "";
+	public XMPPService xmppService;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
+		
+		Helioroom.bindToXMPPService(this, xmppServiceConnection);
 
 //we should be logging in here, we may want to fix this later	
 //		XMPPThread nt = null;
@@ -46,29 +58,52 @@ public class HelioroomLogin extends Activity implements OnClickListener {
 
     	switch(v.getId()){  
         case R.id.button1:  
-        	groupId = "Group1";
+        	groupId = "helio1";
             break;  
         case R.id.button2:  
-        	groupId = "Group2";
+        	groupId = "helio2";
             break;
         case R.id.button3:  
-        	groupId = "Group3";
+        	groupId = "helio3";
             break;  
         case R.id.button4:  
-        	groupId = "Group4";
+        	groupId = "helio4";
             break;  
         case R.id.button5:  
-        	groupId = "Group5";
+        	groupId = "helio5";
             break;  
         case R.id.button6:  
-        	groupId = "Group6";
+        	groupId = "helio6";
             break;  
         case R.id.button7:  
-        	groupId = "Teacher";
+        	groupId = "helio-teacher";
             break; 
     	}  
-
+    	
+    	try {
+    		xmppService.login(groupId, getString(R.string.xmpp_default_password), groupId);
+    	} catch (Exception e) {
+    		Log.e(Helioroom.TAG, "XMPP login failed: "+e.getMessage(), e);
+    	}
+    	
+    	xmppService.joinConference("s3@proto.encorelab.org/Test");
+    	
         startActivity(intent);
   		finish();
     }
+    
+	private ServiceConnection xmppServiceConnection = new ServiceConnection() {
+
+		@Override
+		public void onServiceConnected(ComponentName className, IBinder serv) {
+			Log.d(Helioroom.TAG, "Connecting to XMPPService in "+className.toString());
+			LocalBinder binder = (LocalBinder) serv;
+			xmppService = binder.getService();
+		}
+
+		@Override
+		public void onServiceDisconnected(ComponentName cn) {
+
+		}
+	};
 }

@@ -6,8 +6,8 @@
 	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="/sail.java/lib/gson-1.7.1.jar"/>
 	<classpathentry kind="lib" path="/sail.java/lib/asmack-2010.05.07.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="src" path="sail.java_src"/>
 	<classpathentry kind="src" path="sail.java_test"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

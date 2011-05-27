@@ -154,8 +154,7 @@ public class XMPPThread extends Thread {
 			return;
 		}
 		
-		Message m = new Message(message, Message.Type.groupchat);
-		m.setTo(this.conferenceRoom);
+		Message m = new Message(this.conferenceRoom, Message.Type.groupchat);
 		m.setBody(message);
 		connection.sendPacket(m);
 
