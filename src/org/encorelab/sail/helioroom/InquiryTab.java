@@ -66,8 +66,10 @@ public class InquiryTab extends Activity {
 				
 				if (i.getInqType().equals("question")) {
 					qAdapter.add(i);
+					qAdapter.notifyDataSetChanged();
 				} else if (i.getInqType().equals("discussion")) {
 					dAdapter.add(i);
+					dAdapter.notifyDataSetChanged();
 				} else if (i.getInqType().equals("inquiry with comments")) {
 					int listPos = 0;
 					// iterates through the inq list, checking for an
@@ -83,6 +85,8 @@ public class InquiryTab extends Activity {
 						listPos++;
 					}
 					listPos = 0;
+					qAdapter.notifyDataSetChanged();
+					
 					// iterates through the disc list, checking for an
 					// Inquiry with matching inqId and inqType
 					while (listPos < discList.size()
@@ -95,9 +99,8 @@ public class InquiryTab extends Activity {
 						}
 						listPos++;
 					}
+					dAdapter.notifyDataSetChanged();
 				}
-
-				qAdapter.notifyDataSetChanged();
 
 			}
 		});
