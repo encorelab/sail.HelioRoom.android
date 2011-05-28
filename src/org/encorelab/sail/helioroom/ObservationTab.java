@@ -27,9 +27,30 @@ public class ObservationTab extends Activity {
 	RadioGroup post = null;
 	private RadioButton pre1, pre2, pre3, pre4, pre5, pre6, pre7, pre8, pre9;
 	private RadioButton post1, post2, post3, post4, post5, post6, post7, post8, post9;
-	int preDigit = 0;
-	int postDigit = 0;
+	String preString = null;
+	String postString = null;
 	TextView colourIsText = null;
+	TextView tableText11 = null;
+	TextView tableText12 = null;
+	TextView tableText13 = null;
+	TextView tableText14 = null;
+	TextView tableText15 = null;
+	TextView tableText16 = null;
+	TextView tableText17 = null;
+	TextView tableText18 = null;
+	TextView tableText19 = null;	
+	TextView tableText21 = null;
+	TextView tableText22 = null;
+	TextView tableText23 = null;
+	TextView tableText24 = null;
+	TextView tableText25 = null;
+	TextView tableText26 = null;
+	TextView tableText27 = null;
+	TextView tableText28 = null;
+	TextView tableText29 = null;
+	
+	int[][] tableArray = new int[9][9];
+//	tableArray[0][0] = 1;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -63,7 +84,25 @@ public class ObservationTab extends Activity {
 		coButton.setOnClickListener(onContribute);
 
 		colourIsText = (TextView) findViewById(R.id.selectedText);
-
+		tableText11 = (TextView) findViewById(R.id.table11);
+		tableText12 = (TextView) findViewById(R.id.table12);
+		tableText13 = (TextView) findViewById(R.id.table13);
+		tableText14 = (TextView) findViewById(R.id.table14);
+		tableText15 = (TextView) findViewById(R.id.table15);
+		tableText16 = (TextView) findViewById(R.id.table16);
+		tableText17 = (TextView) findViewById(R.id.table17);
+		tableText18 = (TextView) findViewById(R.id.table18);
+		tableText19 = (TextView) findViewById(R.id.table19);
+		tableText21 = (TextView) findViewById(R.id.table21);
+		tableText22 = (TextView) findViewById(R.id.table22);
+		tableText23 = (TextView) findViewById(R.id.table23);
+		tableText24 = (TextView) findViewById(R.id.table24);
+		tableText25 = (TextView) findViewById(R.id.table25);
+		tableText26 = (TextView) findViewById(R.id.table26);
+		tableText27 = (TextView) findViewById(R.id.table27);
+		tableText28 = (TextView) findViewById(R.id.table28);
+		tableText29 = (TextView) findViewById(R.id.table29);
+		
 	}
 	
 	private View.OnClickListener onClear = new View.OnClickListener() {
@@ -79,68 +118,69 @@ public class ObservationTab extends Activity {
 
 			switch (pre.getCheckedRadioButtonId()) {
 			case R.id.redPre:
-				preDigit = 1;
+				preString = "red";
 				break;
 			case R.id.orangePre:
-				preDigit = 2;
+				preString = "orange";
 				break;
 			case R.id.yellowPre:
-				preDigit = 3;
+				preString = "yellow";
 				break;
 			case R.id.greenPre:
-				preDigit = 4;
+				preString = "green";
 				break;
 			case R.id.bluePre:
-				preDigit = 5;
+				preString = "blue";
 				break;
 			case R.id.purplePre:
-				preDigit = 6;
+				preString = "purple";
 				break;
 			case R.id.brownPre:
-				preDigit = 7;
+				preString = "brown";
 				break;
 			case R.id.grayPre:
-				preDigit = 8;
+				preString = "gray";
 				break;
 			case R.id.pinkPre:
-				preDigit = 9;
+				preString = "pink";
 				break;
 			}
 			switch (post.getCheckedRadioButtonId()) {
 			case R.id.redPost:
-				postDigit = 1;
+				postString = "red";
 				break;
 			case R.id.orangePost:
-				postDigit = 2;
+				postString = "orange";
 				break;
 			case R.id.yellowPost:
-				postDigit = 3;
+				postString = "yellow";
 				break;
 			case R.id.greenPost:
-				postDigit = 4;
+				postString = "green";
 				break;
 			case R.id.bluePost:
-				postDigit = 5;
+				postString = "blue";
 				break;
 			case R.id.purplePost:
-				postDigit = 6;
+				postString = "purple";
 				break;
 			case R.id.brownPost:
-				postDigit = 7;
+				postString = "brown";
 				break;
 			case R.id.grayPost:
-				postDigit = 8;
+				postString = "gray";
 				break;
 			case R.id.pinkPost:
-				postDigit = 9;
+				postString = "pink";
 				break;
 			}
 
 //should we error check here for unclicked buttons (will show up as 0s)... or let Matt do it 
-			int relation = (preDigit*10) + postDigit;
-			o.setObsContent(relation);
+
+			o.setPre(preString);
+			o.setPost(postString);
 			
-			Event ev = new Event("submit_observation", o);
+			Event ev = new Event("observation_submitted", o);
 			ev.toJson();
 
 //			service.sendGroupChat(ev.toString());
@@ -154,6 +194,7 @@ public class ObservationTab extends Activity {
 	private View.OnClickListener onPre1 = new RadioGroup.OnClickListener() {
 		public void onClick(View v) {
 			colourIsText.setText("Red is");
+			tableText11.setText(tableArray[0][0]);
 		}
 	};
 	private View.OnClickListener onPre2 = new RadioGroup.OnClickListener() {

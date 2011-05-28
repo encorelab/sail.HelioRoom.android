@@ -36,7 +36,9 @@
 		<Button android:id="@+id/contribButton" android:text="Contribute" android:layout_marginLeft="50sp" 
 			android:layout_marginTop="30sp" android:layout_width="170sp" android:layout_height="wrap_content" />
 	</LinearLayout>	
-	<TableLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_marginTop="200sp" >
+	<TextView android:text="Our observations" android:textSize="40sp" android:layout_marginLeft="30sp"
+		android:layout_marginTop="150sp" android:layout_width="match_parent" android:layout_height="match_parent" />
+	<TableLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_marginTop="40sp" >
 		<TableRow android:layout_height="match_parent" android:layout_width="match_parent">
 			<TextView android:id="@+id/selectedText" android:textSize="20sp" android:layout_height="wrap_content"
 			android:layout_gravity="center"	android:layout_width="90sp" android:layout_marginRight="40sp"/>
@@ -53,9 +55,9 @@
 		<TableRow android:layout_height="match_parent" android:layout_width="match_parent">
 			<TextView android:text="Closer than" android:layout_height="wrap_content"
 				android:layout_width="wrap_content" android:layout_weight="1" android:textSize="20sp" />
-			<TextView android:id="@+id/table11" android:text="1" android:layout_height="wrap_content"
+			<TextView android:id="@+id/table11" android:layout_height="wrap_content"
 				android:layout_width="0dip" android:layout_weight="1" android:textSize="20sp" />
-			<TextView android:id="@+id/table12" android:text="4" android:layout_height="wrap_content"
+			<TextView android:id="@+id/table12" android:layout_height="wrap_content"
 				android:layout_width="0dip" android:layout_weight="1" android:textSize="20sp" />
 			<TextView android:id="@+id/table13" android:layout_height="wrap_content"
 				android:layout_width="0dip" android:layout_weight="1" android:textSize="20sp" />
@@ -67,15 +69,15 @@
 				android:layout_width="0dip" android:layout_weight="1" android:textSize="20sp" />
 			<TextView android:id="@+id/table17" android:layout_height="wrap_content"
 				android:layout_width="0dip" android:layout_weight="1" android:textSize="20sp" />
-			<TextView android:id="@+id/table18" android:text="1" android:layout_height="wrap_content"
+			<TextView android:id="@+id/table18" android:layout_height="wrap_content"
 				android:layout_width="0dip" android:layout_weight="1" android:textSize="20sp" />
 			<TextView android:id="@+id/table19" android:layout_height="wrap_content"
 				android:layout_width="0dip" android:layout_weight="1" android:textSize="20sp" />
 		</TableRow>
-		<TableRow android:layout_height="match_parent" android:layout_width="match_parent">
-			<TextView android:text="Further than" android:layout_height="wrap_content"
+		<TableRow android:layout_height="match_parent" android:layout_width="match_parent" android:layout_marginTop="15sp" >
+			<TextView android:text="Further than" android:layout_height="wrap_content" 
 				android:layout_width="wrap_content" android:layout_weight="1" android:textSize="20sp" />
-			<TextView android:id="@+id/table21" android:text="1" android:layout_height="wrap_content"
+			<TextView android:id="@+id/table21" android:layout_height="wrap_content"
 				android:layout_width="0dip" android:layout_weight="1" android:textSize="20sp" />
 			<TextView android:id="@+id/table22" android:layout_height="wrap_content"
 				android:layout_width="0dip" android:layout_weight="1" android:textSize="20sp" />
@@ -90,7 +92,7 @@
 			<TextView android:id="@+id/table27" android:layout_height="wrap_content"
 				android:layout_width="0dip" android:layout_weight="1" android:textSize="20sp" />
 			<TextView android:id="@+id/table28" android:layout_height="wrap_content"
-				android:layout_width="0dip" android:text="1" android:layout_weight="1" android:textSize="20sp" />
+				android:layout_width="0dip" android:layout_weight="1" android:textSize="20sp" />
 			<TextView android:id="@+id/table29" android:layout_height="wrap_content"
 				android:layout_width="0dip" android:layout_weight="1" android:textSize="20sp" />
 		</TableRow>

@@ -57,7 +57,7 @@ public class InquiryTab extends Activity {
 		Handler xmppHandler = new Handler();
 		EventListener listener = new EventListener(xmppHandler);
 
-		listener.addResponder("submit_inquiry", new EventResponder() {
+		listener.addResponder("inquiry_submitted", new EventResponder() {
 			@Override
 			public void respond(Event ev) {
 				// i.setInqId(some int inqId);
@@ -171,7 +171,7 @@ public class InquiryTab extends Activity {
 					//qAdapter.add(i);
 					idCounter++;
 
-					Event ev = new Event("submit_inquiry", i);
+					Event ev = new Event("inquiry_submitted", i);
 
 					Helioroom.xmpp.sendEvent(ev);
 					
@@ -190,7 +190,7 @@ public class InquiryTab extends Activity {
 					//dAdapter.add(i);
 					idCounter++;
 								
-					Event ev = new Event("submit_inquiry", i);
+					Event ev = new Event("inquiry_submitted", i);
 					
 					Helioroom.xmpp.sendEvent(ev);
 			}
@@ -204,7 +204,7 @@ public class InquiryTab extends Activity {
 					currentInq.setInqGroup(groupId);
 					currentInq.addInqComment(vEdit.getText().toString());
 					vComment.setText(currentInq.getInqComments());
-//					Event ev = new Event("update_inquiry", i);			//will this just create a new, or overwrite?
+//					Event ev = new Event("inquiry_submitted", i);			//will this just create a new, or overwrite?
 //					ev.toJson();
 				}
 			}
@@ -351,7 +351,7 @@ public class InquiryTab extends Activity {
 //
 //			EventListener listener = new EventListener();
 //
-//			listener.addResponder("submit_inquiry", new EventResponder() {
+//			listener.addResponder("inquiry_submitted", new EventResponder() {
 //				@Override
 //				public void triggered(Event ev) {
 //					// i.setInqId(some int inqId);

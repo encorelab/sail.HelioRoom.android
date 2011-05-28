@@ -30,7 +30,7 @@ public class HelioroomTab extends TabActivity {
 		Intent intent;
 
 		intent = new Intent().setClass(this, ObservationTab.class);
-		spec = tabHost.newTabSpec("observation").setIndicator("Observation").setContent(intent);
+		spec = tabHost.newTabSpec("observation").setIndicator("Observations").setContent(intent);
 		tabHost.addTab(spec);
 //		intent = new Intent().setClass(this, HypothesisTab.class);
 //		spec = tabHost.newTabSpec("hypothesis").setIndicator("Hypothesis").setContent(intent);
