@@ -5,7 +5,6 @@ import java.util.Observer;
 
 import org.encorelab.sail.Event;
 import org.encorelab.sail.helioroom.R;
-import org.encorelab.sail.helioroom.XmppService.LocalBinder;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -33,7 +32,6 @@ public class HypothesisTab extends Activity implements Observer {
 	private TextView textRec;
 	private Button submitButton;
 	private Button refreshButton;
-	private XmppService service;
     private boolean mBound = false;
     private ListView mConversationView;
     
@@ -48,9 +46,7 @@ public class HypothesisTab extends Activity implements Observer {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		// Binds the service in charge of XMPP communications
-        Intent intent = new Intent(this, XmppService.class);
-        getApplicationContext().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+		
         
 		// set up the view
 		setContentView(R.layout.hypothesis);
@@ -80,16 +76,6 @@ public class HypothesisTab extends Activity implements Observer {
 		//hypo.addObserver(this);
 	}
 
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		// Unbinds the XMPP service
-        if (mBound) {
-                getApplicationContext().unbindService(mConnection);
-                mBound = false;
-        }
-
-	}
 
 	// Called when the user clicks submit
 	// FIXME need to add push out on XMPP
@@ -104,7 +90,7 @@ public class HypothesisTab extends Activity implements Observer {
 			
 			Event ev = new Event("submitHypothesis", sendChat.getText().toString());
 			
-			service.sendGroupChat(ev.toJson());
+			Helioroom.xmpp.sendEvent(ev);
 
 			// Clears the text fields
 			sendChat.setText("");
@@ -142,23 +128,4 @@ public class HypothesisTab extends Activity implements Observer {
         }
     };
 
-	
-	/** Defines callbacks for service binding, passed to bindService() */
-    private ServiceConnection mConnection = new ServiceConnection() {
-
-            @Override
-            public void onServiceConnected(ComponentName className,
-                            IBinder serv) {
-                    LocalBinder binder = (LocalBinder) serv;
-                    service = binder.getService();
-                    mBound = true;
-                    // Link to HelioroomTab model
-                    service.addObserver(hypo);
-            }
-
-            @Override
-            public void onServiceDisconnected(ComponentName arg0) {
-                    mBound = false;
-            }
-    };	
 }

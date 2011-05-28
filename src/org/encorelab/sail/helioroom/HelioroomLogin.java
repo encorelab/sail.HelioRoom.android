@@ -24,8 +24,6 @@ public class HelioroomLogin extends Activity implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
-		
-		Helioroom.bindToXMPPService(this, xmppServiceConnection);
 
 //we should be logging in here, we may want to fix this later	
 //		XMPPThread nt = null;
@@ -81,29 +79,15 @@ public class HelioroomLogin extends Activity implements OnClickListener {
     	}  
     	
     	try {
-    		xmppService.login(groupId, getString(R.string.xmpp_default_password), groupId);
+    		Helioroom.xmpp.login(groupId, getString(R.string.xmpp_default_password), groupId);
     	} catch (Exception e) {
     		Log.e(Helioroom.TAG, "XMPP login failed: "+e.getMessage(), e);
     	}
     	
-    	xmppService.joinConference("s3@proto.encorelab.org/Test");
+    	Helioroom.xmpp.joinConference(getString(R.string.xmpp_default_conference), groupId);
     	
         startActivity(intent);
   		finish();
     }
-    
-	private ServiceConnection xmppServiceConnection = new ServiceConnection() {
 
-		@Override
-		public void onServiceConnected(ComponentName className, IBinder serv) {
-			Log.d(Helioroom.TAG, "Connecting to XMPPService in "+className.toString());
-			LocalBinder binder = (LocalBinder) serv;
-			xmppService = binder.getService();
-		}
-
-		@Override
-		public void onServiceDisconnected(ComponentName cn) {
-
-		}
-	};
 }
