@@ -1,5 +1,6 @@
 package org.encorelab.sail.helioroom;
 
+//we're really only using obsContent right now
 public class Observation {
 	private int obsId;
 	private String obsGroup = "";
