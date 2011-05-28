@@ -35,11 +35,13 @@
 			android:layout_marginTop="30sp"	android:layout_width="170sp" android:layout_height="wrap_content" />
 		<Button android:id="@+id/contribButton" android:text="Contribute" android:layout_marginLeft="50sp" 
 			android:layout_marginTop="30sp" android:layout_width="170sp" android:layout_height="wrap_content" />
-	</LinearLayout>	
+	</LinearLayout>
+	<TextView android:layout_width="match_parent" android:layout_height="5sp" android:background="#FFFFFF"
+		android:layout_marginTop="75sp" />	
 	<TextView android:text="Our observations" android:textSize="40sp" android:layout_marginLeft="30sp"
-		android:layout_marginTop="150sp" android:layout_width="match_parent" android:layout_height="match_parent" />
+		android:layout_marginTop="75sp" android:layout_width="match_parent" android:layout_height="match_parent" />
 	<TableLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_marginTop="40sp" >
-		<TableRow android:layout_height="match_parent" android:layout_width="match_parent">
+		<TableRow android:layout_height="match_parent" android:layout_width="match_parent" >
 			<TextView android:id="@+id/selectedText" android:textSize="20sp" android:layout_height="wrap_content"
 			android:layout_gravity="center"	android:layout_width="90sp" android:layout_marginRight="40sp"/>
 			<ImageView android:src="@drawable/red_radio" android:layout_width="wrap_content" android:layout_margin="9sp"/>

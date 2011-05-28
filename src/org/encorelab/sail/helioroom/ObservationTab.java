@@ -50,7 +50,7 @@ public class ObservationTab extends Activity {
 	TextView tableText29 = null;
 	
 	int[][] tableArray = new int[9][9];
-//	tableArray[0][0] = 1;
+	
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -102,7 +102,7 @@ public class ObservationTab extends Activity {
 		tableText27 = (TextView) findViewById(R.id.table27);
 		tableText28 = (TextView) findViewById(R.id.table28);
 		tableText29 = (TextView) findViewById(R.id.table29);
-		
+//		tableArray[0][0] = 1;	
 	}
 	
 	private View.OnClickListener onClear = new View.OnClickListener() {
