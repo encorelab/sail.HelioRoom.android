@@ -206,6 +206,9 @@ public class InquiryTab extends Activity {
 					vComment.setText(currentInq.getInqComments());
 //					Event ev = new Event("update_inquiry", i);			//will this just create a new, or overwrite?
 //					ev.toJson();
+					Event ev = new Event("submit_inquiry", currentInq);
+					
+					Helioroom.xmpp.sendEvent(ev);
 				}
 			}
 
