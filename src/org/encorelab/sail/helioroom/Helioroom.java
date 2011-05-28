@@ -10,7 +10,7 @@ import android.widget.*;
 public class Helioroom extends TabActivity {
 	// this is a class variable that all tabs can use to
 	// send and receive XMPP messages
-//	static XMPPThread nt = null;
+	static XMPPThread nt = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -29,9 +29,9 @@ public class Helioroom extends TabActivity {
 		TabHost.TabSpec spec;
 		Intent intent;
 
-//		intent = new Intent().setClass(this, ObservationTab.class);
-//		spec = tabHost.newTabSpec("observation").setIndicator("Observation").setContent(intent);
-//		tabHost.addTab(spec);
+		intent = new Intent().setClass(this, ObservationTab.class);
+		spec = tabHost.newTabSpec("observation").setIndicator("Observation").setContent(intent);
+		tabHost.addTab(spec);
 //		intent = new Intent().setClass(this, HypothesisTab.class);
 //		spec = tabHost.newTabSpec("hypothesis").setIndicator("Hypothesis").setContent(intent);
 //		tabHost.addTab(spec);
