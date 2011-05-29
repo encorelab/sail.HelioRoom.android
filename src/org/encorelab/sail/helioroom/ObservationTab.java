@@ -10,6 +10,7 @@ import android.os.Handler;
 //import android.view.*;
 import android.util.Log;
 import android.view.*;
+import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.widget.*;
 
@@ -26,7 +27,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class ObservationTab extends Activity {
+public class ObservationTab extends Activity implements OnClickListener {
 
 	//observation vars
 	RadioGroup pre = null;
@@ -35,6 +36,8 @@ public class ObservationTab extends Activity {
 	private RadioButton post1, post2, post3, post4, post5, post6, post7, post8, post9;
 	String preString = null;
 	String postString = null;
+	Button coButton = null;
+	Button clButton = null;
 	
 	//table vars
 	TextView colourIsText = null;
@@ -58,6 +61,10 @@ public class ObservationTab extends Activity {
 	TextView tableText29 = null;
 	
 	int[][] tableArray = new int[9][9];
+
+	//to unlock contrib button
+    boolean preFlag = false;
+    boolean postFlag = false;
 
 	
 	public void onCreate(Bundle savedInstanceState) {
@@ -119,10 +126,30 @@ public class ObservationTab extends Activity {
 		RadioButton pre9 = (RadioButton) findViewById(R.id.pinkPre);
 		pre9.setOnClickListener(onPre9);
 
-		Button clButton = (Button) findViewById(R.id.clearButton);
+		RadioButton post1 = (RadioButton) findViewById(R.id.redPost);
+		post1.setOnClickListener(this);
+		RadioButton post2 = (RadioButton) findViewById(R.id.orangePost);
+		post2.setOnClickListener(this);
+		RadioButton post3 = (RadioButton) findViewById(R.id.yellowPost);
+		post3.setOnClickListener(this);
+		RadioButton post4 = (RadioButton) findViewById(R.id.greenPost);
+		post4.setOnClickListener(this);
+		RadioButton post5 = (RadioButton) findViewById(R.id.bluePost);
+		post5.setOnClickListener(this);
+		RadioButton post6 = (RadioButton) findViewById(R.id.purplePost);
+		post6.setOnClickListener(this);
+		RadioButton post7 = (RadioButton) findViewById(R.id.brownPost);
+		post7.setOnClickListener(this);
+		RadioButton post8 = (RadioButton) findViewById(R.id.grayPost);
+		post8.setOnClickListener(this);
+		RadioButton post9 = (RadioButton) findViewById(R.id.pinkPost);
+		post9.setOnClickListener(this);
+		
+		clButton = (Button) findViewById(R.id.clearButton);
 		clButton.setOnClickListener(onClear);
-		Button coButton = (Button) findViewById(R.id.contribButton);
+		coButton = (Button) findViewById(R.id.contribButton);
 		coButton.setOnClickListener(onContribute);
+		coButton.setEnabled(false);
 
 		colourIsText = (TextView) findViewById(R.id.selectedText);
 		tableText11 = (TextView) findViewById(R.id.table11);
@@ -152,6 +179,13 @@ public class ObservationTab extends Activity {
 		 }
 			
 	}
+
+//	private View.OnClickListener activeCon = new View.OnClickListener() {
+//		public void onClick(View v) {
+//			if ((RadioGroup) findViewById(R.id.preButtons)).
+//			if post.
+//		}
+//	};
 	
 	private View.OnClickListener onClear = new View.OnClickListener() {
 		public void onClick(View v) {
@@ -223,8 +257,6 @@ public class ObservationTab extends Activity {
 				break;
 			}
 
-//should we error check here for unclicked buttons (will show up as 0s)... or let Matt do it 
-
 			o.setPre(preString);
 			o.setPost(postString);
 			
@@ -234,9 +266,12 @@ public class ObservationTab extends Activity {
 
 			((RadioGroup) findViewById(R.id.preButtons)).clearCheck();
 			((RadioGroup) findViewById(R.id.postButtons)).clearCheck();
+			coButton.setEnabled(false);
+			preFlag = false;
+			postFlag = false;
 		}
 	};
-
+	
     // show text based on events from the RadioGroup (super AWK)
 	private View.OnClickListener onPre1 = new RadioGroup.OnClickListener() {
 		public void onClick(View v) {
@@ -259,6 +294,7 @@ public class ObservationTab extends Activity {
 			tableText27.setText(Integer.toString(tableArray[6][0]));
 			tableText28.setText(Integer.toString(tableArray[7][0]));
 			tableText29.setText(Integer.toString(tableArray[8][0]));
+			preFlag = true;
 		}
 	};
 	private View.OnClickListener onPre2 = new RadioGroup.OnClickListener() {
@@ -282,6 +318,7 @@ public class ObservationTab extends Activity {
 			tableText27.setText(Integer.toString(tableArray[6][1]));
 			tableText28.setText(Integer.toString(tableArray[7][1]));
 			tableText29.setText(Integer.toString(tableArray[8][1]));
+			preFlag = true;
 		}
 	};
 	private View.OnClickListener onPre3 = new RadioGroup.OnClickListener() {
@@ -305,6 +342,7 @@ public class ObservationTab extends Activity {
 			tableText27.setText(Integer.toString(tableArray[6][2]));
 			tableText28.setText(Integer.toString(tableArray[7][2]));
 			tableText29.setText(Integer.toString(tableArray[8][2]));
+			preFlag = true;
 		}
 	};
 	private View.OnClickListener onPre4 = new RadioGroup.OnClickListener() {
@@ -328,6 +366,7 @@ public class ObservationTab extends Activity {
 			tableText27.setText(Integer.toString(tableArray[6][3]));
 			tableText28.setText(Integer.toString(tableArray[7][3]));
 			tableText29.setText(Integer.toString(tableArray[8][3]));
+			preFlag = true;
 		}
 	};
 	private View.OnClickListener onPre5 = new RadioGroup.OnClickListener() {
@@ -351,6 +390,7 @@ public class ObservationTab extends Activity {
 			tableText27.setText(Integer.toString(tableArray[6][4]));
 			tableText28.setText(Integer.toString(tableArray[7][4]));
 			tableText29.setText(Integer.toString(tableArray[8][4]));
+			preFlag = true;
 		}
 	};
 	private View.OnClickListener onPre6 = new RadioGroup.OnClickListener() {
@@ -374,6 +414,7 @@ public class ObservationTab extends Activity {
 			tableText27.setText(Integer.toString(tableArray[6][5]));
 			tableText28.setText(Integer.toString(tableArray[7][5]));
 			tableText29.setText(Integer.toString(tableArray[8][5]));
+			preFlag = true;
 		}
 	};
 	private View.OnClickListener onPre7 = new RadioGroup.OnClickListener() {
@@ -397,6 +438,7 @@ public class ObservationTab extends Activity {
 			tableText27.setText(Integer.toString(tableArray[6][6]));
 			tableText28.setText(Integer.toString(tableArray[7][6]));
 			tableText29.setText(Integer.toString(tableArray[8][6]));
+			preFlag = true;
 		}
 	};
 	private View.OnClickListener onPre8 = new RadioGroup.OnClickListener() {
@@ -420,6 +462,7 @@ public class ObservationTab extends Activity {
 			tableText27.setText(Integer.toString(tableArray[6][7]));
 			tableText28.setText(Integer.toString(tableArray[7][7]));
 			tableText29.setText(Integer.toString(tableArray[8][7]));
+			preFlag = true;
 		}
 	};
 	private View.OnClickListener onPre9 = new RadioGroup.OnClickListener() {
@@ -443,6 +486,47 @@ public class ObservationTab extends Activity {
 			tableText27.setText(Integer.toString(tableArray[6][8]));
 			tableText28.setText(Integer.toString(tableArray[7][8]));
 			tableText29.setText(Integer.toString(tableArray[8][8]));
+			preFlag = true;
 		}
 	};
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+	    
+		switch(v.getId()){  
+	    case R.id.redPost:
+	    	postFlag = true;
+	        break;  
+	    case R.id.orangePost:
+	    	postFlag = true;
+	    	break;
+	    case R.id.yellowPost:
+	    	postFlag = true;
+	    	break;  
+	    case R.id.greenPost:
+	    	postFlag = true;
+	    	break;  
+	    case R.id.bluePost:
+	    	postFlag = true;
+	    	break;  
+	    case R.id.purplePost:
+	    	postFlag = true;
+	    	break;  
+	    case R.id.brownPost:
+	    	postFlag = true;
+	    	break;  
+	    case R.id.grayPost:
+	    	postFlag = true;
+	    	break;  
+	    case R.id.pinkPost:
+	    	postFlag = true;
+	    	break;  
+
+	    }
+		
+		if (preFlag == true && postFlag == true) {
+			coButton.setEnabled(true);
+		}
+	}
 }
