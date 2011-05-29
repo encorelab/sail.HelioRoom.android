@@ -225,7 +225,7 @@ public class InquiryTab extends Activity implements OnClickListener {
 			// contrib for Viewer (god this is ugly)
 			else if (qContent.getText().toString().equals("") &&
 				dTitle.getText().toString().equals("") && dContent.getText().toString().equals("") &&
-				!vEdit.getText().toString().equals("")) {
+				!vEdit.getText().toString().equals("") && !vTitle.getText().toString().equals("")) {
 				if (!Helioroom.inqList.isEmpty() || !Helioroom.discList.isEmpty()) {		//locks contrib button if the lists are empty
 
 					
