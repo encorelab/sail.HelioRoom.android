@@ -31,6 +31,7 @@
 			        android:layout_height="wrap_content"
 			        android:drawSelectorOnTop="true"
 			        android:prompt="@string/colour_prompt"
+			        
 			    />
 			    <TextView android:text="is"
 					android:textStyle="bold" android:textSize="20sp" android:padding="4sp"

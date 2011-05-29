@@ -253,7 +253,7 @@ public class InquiryTab extends Activity implements OnClickListener {
 			}
 
 			else {
-				Toast toast = Toast.makeText(InquiryTab.this, "Please make sure your question or comment contains both a title and a note", Toast.LENGTH_LONG);
+				Toast toast = Toast.makeText(InquiryTab.this, "Please make sure your hypothesis contains evidence OR your comment contains both a title and a note", Toast.LENGTH_LONG);
 				toast.setGravity(Gravity.CENTER|Gravity.CENTER, 0, 0);
 				toast.show();
 
