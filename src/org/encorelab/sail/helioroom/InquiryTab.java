@@ -28,7 +28,7 @@ import android.widget.Toast;
 
 
 public class InquiryTab extends Activity {
-
+	private String type = "";
 	EditText qTitle = null;
 	EditText qContent = null;
 	EditText dTitle = null;
@@ -70,12 +70,11 @@ public class InquiryTab extends Activity {
 				} else if (i.getInqType().equals("discussion")) {
 					dAdapter.add(i);
 					dAdapter.notifyDataSetChanged();
-				} else if (i.getInqType().equals("inquiry with comments")) {
+				} else if (i.getInqType().equals("question with comments")) {
 					int listPos = 0;
 					// iterates through the inq list, checking for an
 					// Inquiry with matching inqId and inqType
-					while (listPos < inqList.size()
-							&& i.getInqType().equals("question")) {
+					while (listPos < inqList.size()) {
 						if ((inqList.get(listPos).getInqId() == i
 								.getInqId())
 								&& (inqList.get(listPos).getInqGroup()
@@ -86,11 +85,11 @@ public class InquiryTab extends Activity {
 					}
 					listPos = 0;
 					qAdapter.notifyDataSetChanged();
-					
+				} else if (i.getInqType().equals("discussion with comments")) {
+					int listPos = 0;
 					// iterates through the disc list, checking for an
 					// Inquiry with matching inqId and inqType
-					while (listPos < discList.size()
-							&& i.getInqType().equals("discussion")) {
+					while (listPos < discList.size()) {
 						if ((inqList.get(listPos).getInqId() == i
 								.getInqId())
 								&& (inqList.get(listPos).getInqGroup()
@@ -200,7 +199,15 @@ public class InquiryTab extends Activity {
 				!vEdit.getText().toString().equals("")) {
 				if (!inqList.isEmpty() || !discList.isEmpty()) {		//locks contrib button if the lists are empty
 
-					currentInq.setInqType("inquiry with comments");			
+					
+					// if question title is filled we are sending a comment to a question
+					if (type.equals("question") || type.equals("question with comments")) {
+						currentInq.setInqType("question with comments");
+					}
+					// if discussion title is fille we are sending a comment to a discussion
+					else if (type.equals("discussion") || type.equals("discussion with comments")) {
+						currentInq.setInqType("discussion with comments");
+					}
 					currentInq.setInqGroup(groupId);
 					currentInq.addInqComment(vEdit.getText().toString());
 					vComment.setText(currentInq.getInqComments());
@@ -247,6 +254,7 @@ public class InquiryTab extends Activity {
 //			parent.getChildAt(selectedInqPos).setBackgroundColor(Color.argb(0,0,0,0));
 
 			Inquiry i = inqList.get(position);
+			type = i.getInqType();
 			vTitle.setText(i.getInqTitle());
 			vNote.setText(i.getInqContent());
 			vComment.setText(i.getInqComments());
@@ -268,6 +276,7 @@ public class InquiryTab extends Activity {
 //			parent.getChildAt(selectedInqPos).setBackgroundColor(Color.argb(0,0,0,0));	//turn the background color off
 
 			Inquiry i = discList.get(position);
+			type = i.getInqType();
 			vTitle.setText(i.getInqTitle());
 			vNote.setText(i.getInqContent());
 			vComment.setText(i.getInqComments());
