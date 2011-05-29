@@ -12,6 +12,8 @@ public class Helioroom extends Application {
 
 	public static XMPPThread xmpp;
 
+	public static int[][] tableArray = new int[9][9];
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
