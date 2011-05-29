@@ -1,8 +1,6 @@
 package org.encorelab.sail.helioroom;
 
 
-import java.util.ArrayList;
-import java.util.List;
 
 import org.encorelab.sail.Event;
 import org.encorelab.sail.android.EventListener;
@@ -46,9 +44,6 @@ public class InquiryTab extends Activity {
 	private XMPPThread xmpp;
 	
 	
-	List<Inquiry> inqList = new ArrayList<Inquiry>();
-	List<Inquiry> discList = new ArrayList<Inquiry>();
-
 	InquiryAdapter qAdapter = null;
 	DiscussionAdapter dAdapter = null;
 
@@ -81,12 +76,12 @@ public class InquiryTab extends Activity {
 				 */
 				else if (false && i.getInqType().equals("question with comments")) {
 					int listPos = 0;
-					int listSize = inqList.size();
+					int listSize = Helioroom.inqList.size();
 					// iterates through the inq list, checking for an
 					// Inquiry with matching inqId and inqType
 					while (listPos < listSize) {
-						int listInqId = inqList.get(listPos).getInqId();
-						String listInqGroup = inqList.get(listPos).getInqGroup();
+						int listInqId = Helioroom.inqList.get(listPos).getInqId();
+						String listInqGroup = Helioroom.inqList.get(listPos).getInqGroup();
 						int rvdInqId = i.getInqId();
 						String rvdInqGroup = i.getInqGroup();
 						
@@ -106,10 +101,10 @@ public class InquiryTab extends Activity {
 					int listPos = 0;
 					// iterates through the disc list, checking for an
 					// Inquiry with matching inqId and inqType
-					while (listPos < discList.size()) {
-						if ((inqList.get(listPos).getInqId() == i
+					while (listPos < Helioroom.discList.size()) {
+						if ((Helioroom.inqList.get(listPos).getInqId() == i
 								.getInqId())
-								&& (inqList.get(listPos).getInqGroup()
+								&& (Helioroom.inqList.get(listPos).getInqGroup()
 										.equals(i.getInqGroup()))) {
 							dAdapter.insert(i, listPos);
 						}
@@ -228,7 +223,7 @@ public class InquiryTab extends Activity {
 			else if (qContent.getText().toString().equals("") &&
 				dTitle.getText().toString().equals("") && dContent.getText().toString().equals("") &&
 				!vEdit.getText().toString().equals("")) {
-				if (!inqList.isEmpty() || !discList.isEmpty()) {		//locks contrib button if the lists are empty
+				if (!Helioroom.inqList.isEmpty() || !Helioroom.discList.isEmpty()) {		//locks contrib button if the lists are empty
 
 					
 					// if question title is filled we are sending a comment to a question
@@ -281,14 +276,14 @@ public class InquiryTab extends Activity {
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 
-			for (int x=0; x < inqList.size(); x++) {
+			for (int x=0; x < Helioroom.inqList.size(); x++) {
 				parent.getChildAt(x).setBackgroundColor(Color.argb(0,0,0,0));	//turn the background color off
-//				discList(x).setBackgroundColor(Color.argb(0,0,0,0));		//how can I access the 'dom'?
+//				Helioroom.discList(x).setBackgroundColor(Color.argb(0,0,0,0));		//how can I access the 'dom'?
 			}
 				
 //			parent.getChildAt(selectedInqPos).setBackgroundColor(Color.argb(0,0,0,0));
 
-			Inquiry i = inqList.get(position);
+			Inquiry i = Helioroom.inqList.get(position);
 			type = i.getInqType();
 			vTitle.setText(i.getInqTitle());
 			vNote.setText(i.getInqContent());
@@ -305,12 +300,12 @@ public class InquiryTab extends Activity {
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 
-			for (int x=0; x < discList.size(); x++) {
+			for (int x=0; x < Helioroom.discList.size(); x++) {
 				parent.getChildAt(x).setBackgroundColor(Color.argb(0,0,0,0));	//turn the background color off
 			}
 //			parent.getChildAt(selectedInqPos).setBackgroundColor(Color.argb(0,0,0,0));	//turn the background color off
 
-			Inquiry i = discList.get(position);
+			Inquiry i = Helioroom.discList.get(position);
 			type = i.getInqType();
 			vTitle.setText(i.getInqTitle());
 			vNote.setText(i.getInqContent());
@@ -324,7 +319,7 @@ public class InquiryTab extends Activity {
 	
 	class InquiryAdapter extends ArrayAdapter<Inquiry> {
 		InquiryAdapter() {
-			super(InquiryTab.this, R.layout.row, inqList);
+			super(InquiryTab.this, R.layout.row, Helioroom.inqList);
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
@@ -340,7 +335,7 @@ public class InquiryTab extends Activity {
 				holder = (InquiryHolder) row.getTag();
 			}
 
-			holder.populateFrom(inqList.get(position));
+			holder.populateFrom(Helioroom.inqList.get(position));
 
 			return (row);
 			
@@ -349,7 +344,7 @@ public class InquiryTab extends Activity {
 
 	class DiscussionAdapter extends ArrayAdapter<Inquiry> {
 		DiscussionAdapter() {
-			super(InquiryTab.this, R.layout.row, discList);
+			super(InquiryTab.this, R.layout.row, Helioroom.discList);
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
@@ -365,7 +360,7 @@ public class InquiryTab extends Activity {
 				holder = (InquiryHolder) row.getTag();
 			}
 
-			holder.populateFrom(discList.get(position));
+			holder.populateFrom(Helioroom.discList.get(position));
 
 			return (row);
 		}
@@ -439,7 +434,7 @@ public class InquiryTab extends Activity {
 //						listPos = 0;
 //						// iterates through the disc list, checking for an
 //						// Inquiry with matching inqId and inqType
-//						while (listPos < discList.size()
+//						while (listPos < Helioroom.discList.size()
 //								&& i.getInqType().equals("discussion")) {
 //							if ((inqList.get(listPos).getInqId() == i
 //									.getInqId())

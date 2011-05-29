@@ -1,6 +1,9 @@
 package org.encorelab.sail.helioroom;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.encorelab.sail.android.xmpp.XMPPThread;
 
 import android.app.Application;
@@ -11,6 +14,9 @@ public class Helioroom extends Application {
 	public static final String TAG = "HelioRoom";
 
 	public static XMPPThread xmpp;
+
+	public static List<Inquiry> inqList = new ArrayList<Inquiry>();
+	public static List<Inquiry> discList = new ArrayList<Inquiry>();
 
 	@Override
 	public void onCreate() {
