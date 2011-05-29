@@ -17,6 +17,7 @@ public class Helioroom extends Application {
 
 	public static List<Inquiry> inqList = new ArrayList<Inquiry>();
 	public static List<Inquiry> discList = new ArrayList<Inquiry>();
+	public static int[][] tableArray = new int[9][9];
 
 	@Override
 	public void onCreate() {
