@@ -138,7 +138,6 @@ public class InquiryTab extends Activity implements OnClickListener {
 			
 		submit = (Button) findViewById(R.id.contribButton);
 		submit.setOnClickListener(onInqSubmit);
-		submit.setEnabled(false);
 		
 		qAdapter = new InquiryAdapter();
 		dAdapter = new DiscussionAdapter();
@@ -270,7 +269,6 @@ public class InquiryTab extends Activity implements OnClickListener {
 			dTitle.setText("");
 			dContent.setText("");
 			vEdit.setText("");
-			submit.setEnabled(false);			
 		}
 	};
 	
