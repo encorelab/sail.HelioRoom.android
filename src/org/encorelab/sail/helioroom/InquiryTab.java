@@ -281,10 +281,11 @@ public class InquiryTab extends Activity implements OnClickListener {
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 
-			for (int x=0; x < Helioroom.inqList.size(); x++) {
+			//for (int x=0; x < Helioroom.inqList.size(); x++) {
+			/*for (int x=0; x < parent.getCount(); x++) {
 				parent.getChildAt(x).setBackgroundColor(Color.argb(0,0,0,0));	//turn the background color off
 //				Helioroom.discList(x).setBackgroundColor(Color.argb(0,0,0,0));		//how can I access the 'dom'?
-			}
+			}*/
 				
 //			parent.getChildAt(selectedInqPos).setBackgroundColor(Color.argb(0,0,0,0));
 
@@ -294,8 +295,8 @@ public class InquiryTab extends Activity implements OnClickListener {
 			vNote.setText(i.getInqContent());
 			vComment.setText(i.getInqComments());
 			currentInq = i;
-			vTitle.setBackgroundColor(Color.argb(255,200,0,200));
-			parent.getChildAt(position).setBackgroundColor(Color.argb(255,200,0,200));
+			//vTitle.setBackgroundColor(Color.argb(255,200,0,200));
+			//parent.getChildAt(position).setBackgroundColor(Color.argb(255,200,0,200));
 //			selectedInqPos = position;				//var to switch background color off on the next onclick
 		}
 	};
@@ -305,9 +306,9 @@ public class InquiryTab extends Activity implements OnClickListener {
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 
-			for (int x=0; x < Helioroom.discList.size(); x++) {
+			/*for (int x=0; x < Helioroom.discList.size(); x++) {
 				parent.getChildAt(x).setBackgroundColor(Color.argb(0,0,0,0));	//turn the background color off
-			}
+			}*/
 //			parent.getChildAt(selectedInqPos).setBackgroundColor(Color.argb(0,0,0,0));	//turn the background color off
 
 			Inquiry i = Helioroom.discList.get(position);
@@ -316,8 +317,8 @@ public class InquiryTab extends Activity implements OnClickListener {
 			vNote.setText(i.getInqContent());
 			vComment.setText(i.getInqComments());
 			currentInq = i;
-			vTitle.setBackgroundColor(Color.argb(255,200,0,200));
-			parent.getChildAt(position).setBackgroundColor(Color.argb(255,200,0,200));
+			//vTitle.setBackgroundColor(Color.argb(255,200,0,200));
+			//parent.getChildAt(position).setBackgroundColor(Color.argb(255,200,0,200));
 //			selectedInqPos = position;	
 		}
 	};
