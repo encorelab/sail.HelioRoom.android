@@ -108,24 +108,23 @@ public class ObservationTab extends Activity implements OnClickListener {
 		post = (RadioGroup) findViewById(R.id.postButtons);
 
 		RadioButton pre1 = (RadioButton) findViewById(R.id.redPre);
-		pre1.setOnClickListener(onPre1);
+		pre1.setOnClickListener(this);
 		RadioButton pre2 = (RadioButton) findViewById(R.id.orangePre);
-		pre2.setOnClickListener(onPre2);
+		pre2.setOnClickListener(this);
 		RadioButton pre3 = (RadioButton) findViewById(R.id.yellowPre);
-		pre3.setOnClickListener(onPre3);
+		pre3.setOnClickListener(this);
 		RadioButton pre4 = (RadioButton) findViewById(R.id.greenPre);
-		pre4.setOnClickListener(onPre4);
+		pre4.setOnClickListener(this);
 		RadioButton pre5 = (RadioButton) findViewById(R.id.bluePre);
-		pre5.setOnClickListener(onPre5);
+		pre5.setOnClickListener(this);
 		RadioButton pre6 = (RadioButton) findViewById(R.id.purplePre);
-		pre6.setOnClickListener(onPre6);
+		pre6.setOnClickListener(this);
 		RadioButton pre7 = (RadioButton) findViewById(R.id.brownPre);
-		pre7.setOnClickListener(onPre7);
+		pre7.setOnClickListener(this);
 		RadioButton pre8 = (RadioButton) findViewById(R.id.grayPre);
-		pre8.setOnClickListener(onPre8);
+		pre8.setOnClickListener(this);
 		RadioButton pre9 = (RadioButton) findViewById(R.id.pinkPre);
-		pre9.setOnClickListener(onPre9);
-
+		pre9.setOnClickListener(this);
 		RadioButton post1 = (RadioButton) findViewById(R.id.redPost);
 		post1.setOnClickListener(this);
 		RadioButton post2 = (RadioButton) findViewById(R.id.orangePost);
@@ -273,8 +272,229 @@ public class ObservationTab extends Activity implements OnClickListener {
 	};
 	
     // show text based on events from the RadioGroup (super AWK)
-	private View.OnClickListener onPre1 = new RadioGroup.OnClickListener() {
-		public void onClick(View v) {
+//	private View.OnClickListener onPre1 = new RadioGroup.OnClickListener() {
+//		public void onClick(View v) {
+//			colourIsText.setText("Red is");
+//			tableText11.setText(Integer.toString(tableArray[0][0]));
+//			tableText12.setText(Integer.toString(tableArray[0][1]));
+//			tableText13.setText(Integer.toString(tableArray[0][2]));
+//			tableText14.setText(Integer.toString(tableArray[0][3]));
+//			tableText15.setText(Integer.toString(tableArray[0][4]));
+//			tableText16.setText(Integer.toString(tableArray[0][5]));
+//			tableText17.setText(Integer.toString(tableArray[0][6]));
+//			tableText18.setText(Integer.toString(tableArray[0][7]));
+//			tableText19.setText(Integer.toString(tableArray[0][8]));
+//			tableText21.setText(Integer.toString(tableArray[0][0]));
+//			tableText22.setText(Integer.toString(tableArray[1][0]));
+//			tableText23.setText(Integer.toString(tableArray[2][0]));
+//			tableText24.setText(Integer.toString(tableArray[3][0]));
+//			tableText25.setText(Integer.toString(tableArray[4][0]));
+//			tableText26.setText(Integer.toString(tableArray[5][0]));
+//			tableText27.setText(Integer.toString(tableArray[6][0]));
+//			tableText28.setText(Integer.toString(tableArray[7][0]));
+//			tableText29.setText(Integer.toString(tableArray[8][0]));
+//			preFlag = true;
+//		}
+//	};
+//	private View.OnClickListener onPre2 = new RadioGroup.OnClickListener() {
+//		public void onClick(View v) {
+//			colourIsText.setText("Orange is");
+//			tableText11.setText(Integer.toString(tableArray[1][0]));
+//			tableText12.setText(Integer.toString(tableArray[1][1]));
+//			tableText13.setText(Integer.toString(tableArray[1][2]));
+//			tableText14.setText(Integer.toString(tableArray[1][3]));
+//			tableText15.setText(Integer.toString(tableArray[1][4]));
+//			tableText16.setText(Integer.toString(tableArray[1][5]));
+//			tableText17.setText(Integer.toString(tableArray[1][6]));
+//			tableText18.setText(Integer.toString(tableArray[1][7]));
+//			tableText19.setText(Integer.toString(tableArray[1][8]));
+//			tableText21.setText(Integer.toString(tableArray[0][1]));
+//			tableText22.setText(Integer.toString(tableArray[1][1]));
+//			tableText23.setText(Integer.toString(tableArray[2][1]));
+//			tableText24.setText(Integer.toString(tableArray[3][1]));
+//			tableText25.setText(Integer.toString(tableArray[4][1]));
+//			tableText26.setText(Integer.toString(tableArray[5][1]));
+//			tableText27.setText(Integer.toString(tableArray[6][1]));
+//			tableText28.setText(Integer.toString(tableArray[7][1]));
+//			tableText29.setText(Integer.toString(tableArray[8][1]));
+//			preFlag = true;
+//		}
+//	};
+//	private View.OnClickListener onPre3 = new RadioGroup.OnClickListener() {
+//		public void onClick(View v) {
+//			colourIsText.setText("Yellow is");
+//			tableText11.setText(Integer.toString(tableArray[2][0]));
+//			tableText12.setText(Integer.toString(tableArray[2][1]));
+//			tableText13.setText(Integer.toString(tableArray[2][2]));
+//			tableText14.setText(Integer.toString(tableArray[2][3]));
+//			tableText15.setText(Integer.toString(tableArray[2][4]));
+//			tableText16.setText(Integer.toString(tableArray[2][5]));
+//			tableText17.setText(Integer.toString(tableArray[2][6]));
+//			tableText18.setText(Integer.toString(tableArray[2][7]));
+//			tableText19.setText(Integer.toString(tableArray[2][8]));
+//			tableText21.setText(Integer.toString(tableArray[0][2]));
+//			tableText22.setText(Integer.toString(tableArray[1][2]));
+//			tableText23.setText(Integer.toString(tableArray[2][2]));
+//			tableText24.setText(Integer.toString(tableArray[3][2]));
+//			tableText25.setText(Integer.toString(tableArray[4][2]));
+//			tableText26.setText(Integer.toString(tableArray[5][2]));
+//			tableText27.setText(Integer.toString(tableArray[6][2]));
+//			tableText28.setText(Integer.toString(tableArray[7][2]));
+//			tableText29.setText(Integer.toString(tableArray[8][2]));
+//			preFlag = true;
+//		}
+//	};
+//	private View.OnClickListener onPre4 = new RadioGroup.OnClickListener() {
+//		public void onClick(View v) {
+//			colourIsText.setText("Green is");
+//			tableText11.setText(Integer.toString(tableArray[3][0]));
+//			tableText12.setText(Integer.toString(tableArray[3][1]));
+//			tableText13.setText(Integer.toString(tableArray[3][2]));
+//			tableText14.setText(Integer.toString(tableArray[3][3]));
+//			tableText15.setText(Integer.toString(tableArray[3][4]));
+//			tableText16.setText(Integer.toString(tableArray[3][5]));
+//			tableText17.setText(Integer.toString(tableArray[3][6]));
+//			tableText18.setText(Integer.toString(tableArray[3][7]));
+//			tableText19.setText(Integer.toString(tableArray[3][8]));
+//			tableText21.setText(Integer.toString(tableArray[0][3]));
+//			tableText22.setText(Integer.toString(tableArray[1][3]));
+//			tableText23.setText(Integer.toString(tableArray[2][3]));
+//			tableText24.setText(Integer.toString(tableArray[3][3]));
+//			tableText25.setText(Integer.toString(tableArray[4][3]));
+//			tableText26.setText(Integer.toString(tableArray[5][3]));
+//			tableText27.setText(Integer.toString(tableArray[6][3]));
+//			tableText28.setText(Integer.toString(tableArray[7][3]));
+//			tableText29.setText(Integer.toString(tableArray[8][3]));
+//			preFlag = true;
+//		}
+//	};
+//	private View.OnClickListener onPre5 = new RadioGroup.OnClickListener() {
+//		public void onClick(View v) {
+//			colourIsText.setText("Blue is");
+//			tableText11.setText(Integer.toString(tableArray[4][0]));
+//			tableText12.setText(Integer.toString(tableArray[4][1]));
+//			tableText13.setText(Integer.toString(tableArray[4][2]));
+//			tableText14.setText(Integer.toString(tableArray[4][3]));
+//			tableText15.setText(Integer.toString(tableArray[4][4]));
+//			tableText16.setText(Integer.toString(tableArray[4][5]));
+//			tableText17.setText(Integer.toString(tableArray[4][6]));
+//			tableText18.setText(Integer.toString(tableArray[4][7]));
+//			tableText19.setText(Integer.toString(tableArray[4][8]));
+//			tableText21.setText(Integer.toString(tableArray[0][4]));
+//			tableText22.setText(Integer.toString(tableArray[1][4]));
+//			tableText23.setText(Integer.toString(tableArray[2][4]));
+//			tableText24.setText(Integer.toString(tableArray[3][4]));
+//			tableText25.setText(Integer.toString(tableArray[4][4]));
+//			tableText26.setText(Integer.toString(tableArray[5][4]));
+//			tableText27.setText(Integer.toString(tableArray[6][4]));
+//			tableText28.setText(Integer.toString(tableArray[7][4]));
+//			tableText29.setText(Integer.toString(tableArray[8][4]));
+//			preFlag = true;
+//		}
+//	};
+//	private View.OnClickListener onPre6 = new RadioGroup.OnClickListener() {
+//		public void onClick(View v) {
+//			colourIsText.setText("Purple is");
+//			tableText11.setText(Integer.toString(tableArray[5][0]));
+//			tableText12.setText(Integer.toString(tableArray[5][1]));
+//			tableText13.setText(Integer.toString(tableArray[5][2]));
+//			tableText14.setText(Integer.toString(tableArray[5][3]));
+//			tableText15.setText(Integer.toString(tableArray[5][4]));
+//			tableText16.setText(Integer.toString(tableArray[5][5]));
+//			tableText17.setText(Integer.toString(tableArray[5][6]));
+//			tableText18.setText(Integer.toString(tableArray[5][7]));
+//			tableText19.setText(Integer.toString(tableArray[5][8]));
+//			tableText21.setText(Integer.toString(tableArray[0][5]));
+//			tableText22.setText(Integer.toString(tableArray[1][5]));
+//			tableText23.setText(Integer.toString(tableArray[2][5]));
+//			tableText24.setText(Integer.toString(tableArray[3][5]));
+//			tableText25.setText(Integer.toString(tableArray[4][5]));
+//			tableText26.setText(Integer.toString(tableArray[5][5]));
+//			tableText27.setText(Integer.toString(tableArray[6][5]));
+//			tableText28.setText(Integer.toString(tableArray[7][5]));
+//			tableText29.setText(Integer.toString(tableArray[8][5]));
+//			preFlag = true;
+//		}
+//	};
+//	private View.OnClickListener onPre7 = new RadioGroup.OnClickListener() {
+//		public void onClick(View v) {
+//			colourIsText.setText("Brown is");
+//			tableText11.setText(Integer.toString(tableArray[6][0]));
+//			tableText12.setText(Integer.toString(tableArray[6][1]));
+//			tableText13.setText(Integer.toString(tableArray[6][2]));
+//			tableText14.setText(Integer.toString(tableArray[6][3]));
+//			tableText15.setText(Integer.toString(tableArray[6][4]));
+//			tableText16.setText(Integer.toString(tableArray[6][5]));
+//			tableText17.setText(Integer.toString(tableArray[6][6]));
+//			tableText18.setText(Integer.toString(tableArray[6][7]));
+//			tableText19.setText(Integer.toString(tableArray[6][8]));
+//			tableText21.setText(Integer.toString(tableArray[0][6]));
+//			tableText22.setText(Integer.toString(tableArray[1][6]));
+//			tableText23.setText(Integer.toString(tableArray[2][6]));
+//			tableText24.setText(Integer.toString(tableArray[3][6]));
+//			tableText25.setText(Integer.toString(tableArray[4][6]));
+//			tableText26.setText(Integer.toString(tableArray[5][6]));
+//			tableText27.setText(Integer.toString(tableArray[6][6]));
+//			tableText28.setText(Integer.toString(tableArray[7][6]));
+//			tableText29.setText(Integer.toString(tableArray[8][6]));
+//			preFlag = true;
+//		}
+//	};
+//	private View.OnClickListener onPre8 = new RadioGroup.OnClickListener() {
+//		public void onClick(View v) {
+//			colourIsText.setText("Gray is");
+//			tableText11.setText(Integer.toString(tableArray[7][0]));
+//			tableText12.setText(Integer.toString(tableArray[7][1]));
+//			tableText13.setText(Integer.toString(tableArray[7][2]));
+//			tableText14.setText(Integer.toString(tableArray[7][3]));
+//			tableText15.setText(Integer.toString(tableArray[7][4]));
+//			tableText16.setText(Integer.toString(tableArray[7][5]));
+//			tableText17.setText(Integer.toString(tableArray[7][6]));
+//			tableText18.setText(Integer.toString(tableArray[7][7]));
+//			tableText19.setText(Integer.toString(tableArray[7][8]));
+//			tableText21.setText(Integer.toString(tableArray[0][7]));
+//			tableText22.setText(Integer.toString(tableArray[1][7]));
+//			tableText23.setText(Integer.toString(tableArray[2][7]));
+//			tableText24.setText(Integer.toString(tableArray[3][7]));
+//			tableText25.setText(Integer.toString(tableArray[4][7]));
+//			tableText26.setText(Integer.toString(tableArray[5][7]));
+//			tableText27.setText(Integer.toString(tableArray[6][7]));
+//			tableText28.setText(Integer.toString(tableArray[7][7]));
+//			tableText29.setText(Integer.toString(tableArray[8][7]));
+//			preFlag = true;
+//		}
+//	};
+//	private View.OnClickListener onPre9 = new RadioGroup.OnClickListener() {
+//		public void onClick(View v) {
+//			colourIsText.setText("Pink is");
+//			tableText11.setText(Integer.toString(tableArray[8][0]));
+//			tableText12.setText(Integer.toString(tableArray[8][1]));
+//			tableText13.setText(Integer.toString(tableArray[8][2]));
+//			tableText14.setText(Integer.toString(tableArray[8][3]));
+//			tableText15.setText(Integer.toString(tableArray[8][4]));
+//			tableText16.setText(Integer.toString(tableArray[8][5]));
+//			tableText17.setText(Integer.toString(tableArray[8][6]));
+//			tableText18.setText(Integer.toString(tableArray[8][7]));
+//			tableText19.setText(Integer.toString(tableArray[8][8]));
+//			tableText21.setText(Integer.toString(tableArray[0][8]));
+//			tableText22.setText(Integer.toString(tableArray[1][8]));
+//			tableText23.setText(Integer.toString(tableArray[2][8]));
+//			tableText24.setText(Integer.toString(tableArray[3][8]));
+//			tableText25.setText(Integer.toString(tableArray[4][8]));
+//			tableText26.setText(Integer.toString(tableArray[5][8]));
+//			tableText27.setText(Integer.toString(tableArray[6][8]));
+//			tableText28.setText(Integer.toString(tableArray[7][8]));
+//			tableText29.setText(Integer.toString(tableArray[8][8]));
+//			preFlag = true;
+//		}
+//	};
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+	    
+		switch(v.getId()){  
+	    case R.id.redPre:
 			colourIsText.setText("Red is");
 			tableText11.setText(Integer.toString(tableArray[0][0]));
 			tableText12.setText(Integer.toString(tableArray[0][1]));
@@ -294,11 +514,9 @@ public class ObservationTab extends Activity implements OnClickListener {
 			tableText27.setText(Integer.toString(tableArray[6][0]));
 			tableText28.setText(Integer.toString(tableArray[7][0]));
 			tableText29.setText(Integer.toString(tableArray[8][0]));
-			preFlag = true;
-		}
-	};
-	private View.OnClickListener onPre2 = new RadioGroup.OnClickListener() {
-		public void onClick(View v) {
+	    	preFlag = true;
+	        break;  
+	    case R.id.orangePre:
 			colourIsText.setText("Orange is");
 			tableText11.setText(Integer.toString(tableArray[1][0]));
 			tableText12.setText(Integer.toString(tableArray[1][1]));
@@ -319,10 +537,8 @@ public class ObservationTab extends Activity implements OnClickListener {
 			tableText28.setText(Integer.toString(tableArray[7][1]));
 			tableText29.setText(Integer.toString(tableArray[8][1]));
 			preFlag = true;
-		}
-	};
-	private View.OnClickListener onPre3 = new RadioGroup.OnClickListener() {
-		public void onClick(View v) {
+	    	break;
+	    case R.id.yellowPre:
 			colourIsText.setText("Yellow is");
 			tableText11.setText(Integer.toString(tableArray[2][0]));
 			tableText12.setText(Integer.toString(tableArray[2][1]));
@@ -343,10 +559,8 @@ public class ObservationTab extends Activity implements OnClickListener {
 			tableText28.setText(Integer.toString(tableArray[7][2]));
 			tableText29.setText(Integer.toString(tableArray[8][2]));
 			preFlag = true;
-		}
-	};
-	private View.OnClickListener onPre4 = new RadioGroup.OnClickListener() {
-		public void onClick(View v) {
+	    	break;
+	    case R.id.greenPre:
 			colourIsText.setText("Green is");
 			tableText11.setText(Integer.toString(tableArray[3][0]));
 			tableText12.setText(Integer.toString(tableArray[3][1]));
@@ -367,10 +581,8 @@ public class ObservationTab extends Activity implements OnClickListener {
 			tableText28.setText(Integer.toString(tableArray[7][3]));
 			tableText29.setText(Integer.toString(tableArray[8][3]));
 			preFlag = true;
-		}
-	};
-	private View.OnClickListener onPre5 = new RadioGroup.OnClickListener() {
-		public void onClick(View v) {
+	    	break;
+	    case R.id.bluePre:
 			colourIsText.setText("Blue is");
 			tableText11.setText(Integer.toString(tableArray[4][0]));
 			tableText12.setText(Integer.toString(tableArray[4][1]));
@@ -391,10 +603,8 @@ public class ObservationTab extends Activity implements OnClickListener {
 			tableText28.setText(Integer.toString(tableArray[7][4]));
 			tableText29.setText(Integer.toString(tableArray[8][4]));
 			preFlag = true;
-		}
-	};
-	private View.OnClickListener onPre6 = new RadioGroup.OnClickListener() {
-		public void onClick(View v) {
+	    	break;
+	    case R.id.purplePre:
 			colourIsText.setText("Purple is");
 			tableText11.setText(Integer.toString(tableArray[5][0]));
 			tableText12.setText(Integer.toString(tableArray[5][1]));
@@ -415,10 +625,8 @@ public class ObservationTab extends Activity implements OnClickListener {
 			tableText28.setText(Integer.toString(tableArray[7][5]));
 			tableText29.setText(Integer.toString(tableArray[8][5]));
 			preFlag = true;
-		}
-	};
-	private View.OnClickListener onPre7 = new RadioGroup.OnClickListener() {
-		public void onClick(View v) {
+	    	break;
+	    case R.id.brownPre:
 			colourIsText.setText("Brown is");
 			tableText11.setText(Integer.toString(tableArray[6][0]));
 			tableText12.setText(Integer.toString(tableArray[6][1]));
@@ -439,10 +647,8 @@ public class ObservationTab extends Activity implements OnClickListener {
 			tableText28.setText(Integer.toString(tableArray[7][6]));
 			tableText29.setText(Integer.toString(tableArray[8][6]));
 			preFlag = true;
-		}
-	};
-	private View.OnClickListener onPre8 = new RadioGroup.OnClickListener() {
-		public void onClick(View v) {
+	    	break;
+	    case R.id.grayPre:
 			colourIsText.setText("Gray is");
 			tableText11.setText(Integer.toString(tableArray[7][0]));
 			tableText12.setText(Integer.toString(tableArray[7][1]));
@@ -463,10 +669,8 @@ public class ObservationTab extends Activity implements OnClickListener {
 			tableText28.setText(Integer.toString(tableArray[7][7]));
 			tableText29.setText(Integer.toString(tableArray[8][7]));
 			preFlag = true;
-		}
-	};
-	private View.OnClickListener onPre9 = new RadioGroup.OnClickListener() {
-		public void onClick(View v) {
+	    	break;
+	    case R.id.pinkPre:
 			colourIsText.setText("Pink is");
 			tableText11.setText(Integer.toString(tableArray[8][0]));
 			tableText12.setText(Integer.toString(tableArray[8][1]));
@@ -487,14 +691,7 @@ public class ObservationTab extends Activity implements OnClickListener {
 			tableText28.setText(Integer.toString(tableArray[7][8]));
 			tableText29.setText(Integer.toString(tableArray[8][8]));
 			preFlag = true;
-		}
-	};
-
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-	    
-		switch(v.getId()){  
+	    	break;
 	    case R.id.redPost:
 	    	postFlag = true;
 	        break;  
