@@ -8,6 +8,7 @@ import org.encorelab.sail.android.EventResponder;
 import org.encorelab.sail.android.xmpp.XMPPThread;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +17,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -154,9 +156,8 @@ public class InquiryTab extends Activity {
 	            this, R.array.planets, android.R.layout.simple_spinner_item);
 	    planetAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	    planetSpinner.setAdapter(planetAdapter);
-	    
+
 		//TODO:
-		//Get this working with Json out OBV rollcall/proto isnt working right now
 		//Add a toast to let the idiots know theyve filled too many fields
 		//
 		//XML

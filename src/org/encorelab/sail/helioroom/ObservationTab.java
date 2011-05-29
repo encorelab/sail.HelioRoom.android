@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.*;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 
 import org.encorelab.sail.Event;
@@ -23,6 +24,7 @@ import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode;
 import org.jivesoftware.smackx.*;
 import org.jivesoftware.smackx.muc.*;
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -172,17 +174,19 @@ public class ObservationTab extends Activity implements OnClickListener {
 		     for (int j=0; j<Helioroom.tableArray.length; j++) {
 		         Helioroom.tableArray[i][j] = 0;
 		     }
-		     //tableArray[i][j] = 0;
 		 }
-			
+		
+//	    InputMethodManager inputMgr = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+//	    inputMgr.toggleSoftInput(0, 0);
+//		Activity ObservationTab;
+//
+//		hideSoftKeyboard(ObservationTab, );
 	}
-
-//	private View.OnClickListener activeCon = new View.OnClickListener() {
-//		public void onClick(View v) {
-//			if ((RadioGroup) findViewById(R.id.preButtons)).
-//			if post.
+//
+//	public static void hideSoftKeyboard (Activity activity, View view) {
+//		  InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+//		  imm.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
 //		}
-//	};
 	
 	private View.OnClickListener onClear = new View.OnClickListener() {
 		public void onClick(View v) {
