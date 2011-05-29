@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -28,7 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class InquiryTab extends Activity {
+public class InquiryTab extends Activity implements OnClickListener {
 	private String type = "";
 	EditText qTitle = null;
 	EditText qContent = null;
@@ -40,6 +41,7 @@ public class InquiryTab extends Activity {
 	EditText vEdit = null;
 	private Spinner colourSpinner = null;
 	private Spinner planetSpinner = null;
+	Button submit = null;
 	
 	String groupId = HelioroomLogin.groupId;						//set at login screen
 	//private XmppService service;
@@ -133,10 +135,11 @@ public class InquiryTab extends Activity {
 		vEdit = (EditText) findViewById(R.id.viewerEdit);
 		ListView qList = (ListView) findViewById(R.id.inqList);
 		ListView dList = (ListView) findViewById(R.id.discList);
-		
-		Button submit = (Button) findViewById(R.id.contribButton);
+			
+		submit = (Button) findViewById(R.id.contribButton);
 		submit.setOnClickListener(onInqSubmit);
-
+		submit.setEnabled(false);
+		
 		qAdapter = new InquiryAdapter();
 		dAdapter = new DiscussionAdapter();
 		qList.setAdapter(qAdapter);
@@ -231,7 +234,7 @@ public class InquiryTab extends Activity {
 					if (type.equals("question") || type.equals("question with comments")) {
 						currentInq.setInqType("question with comments");
 					}
-					// if discussion title is fille we are sending a comment to a discussion
+					// if discussion title is filled we are sending a comment to a discussion
 					else if (type.equals("discussion") || type.equals("discussion with comments")) {
 						currentInq.setInqType("discussion with comments");
 					}
@@ -251,7 +254,7 @@ public class InquiryTab extends Activity {
 			}
 
 			else {
-				Toast toast = Toast.makeText(InquiryTab.this, "Please make sure your question or comment contains both a title and a note", Toast.LENGTH_SHORT);
+				Toast toast = Toast.makeText(InquiryTab.this, "Please make sure your question or comment contains both a title and a note", Toast.LENGTH_LONG);
 				toast.setGravity(Gravity.CENTER|Gravity.CENTER, 0, 0);
 				toast.show();
 
@@ -267,6 +270,7 @@ public class InquiryTab extends Activity {
 			dTitle.setText("");
 			dContent.setText("");
 			vEdit.setText("");
+			submit.setEnabled(false);			
 		}
 	};
 	
@@ -384,87 +388,12 @@ public class InquiryTab extends Activity {
 //			content.setText(i.getInqContent());
 		}
 	}
-	
-//	private ServiceConnection xmppServiceConnection = new ServiceConnection() {
-//
-//		@Override
-//		public void onServiceConnected(ComponentName className, IBinder serv) {
-//			LocalBinder binder = (LocalBinder) serv;
-//			xmppService = binder.getService();
-//
-//			EventListener listener = new EventListener();
-//
-//			listener.addResponder("inquiry_submitted", new EventResponder() {
-//				@Override
-//				public void triggered(Event ev) {
-//					// i.setInqId(some int inqId);
-//					Log.d(Helioroom.TAG, "Got inquiry!");
-//					Inquiry i = (Inquiry) ev.getPayload(Inquiry.class);
-//					android.os.Message msg = new android.os.Message();
-//
-//					if (i.getInqType().equals("question")) {
-//						// qAdapter.add(i);
-//						msg.arg1 = 1;
-//						msg.obj = i;
-//					} else if (i.getInqType().equals("discussion")) {
-//						// dAdapter.add(i);
-//						msg.arg1 = 2;
-//						msg.obj = i;
-//					} else if (i.getInqType().equals("inquiry with comments")) { // should
-//																					// this
-//																					// be
-//																					// the
-//																					// else?
-//
-//						int listPos = 0;
-//						// iterates through the inq list, checking for an
-//						// Inquiry with matching inqId and inqType
-//						while (listPos < inqList.size()
-//								&& i.getInqType().equals("question")) {
-//							if ((inqList.get(listPos).getInqId() == i
-//									.getInqId())
-//									&& (inqList.get(listPos).getInqGroup()
-//											.equals(i.getInqGroup()))) {
-//								// qAdapter.insert(i, listPos);
-//								msg.arg1 = 3;
-//								msg.obj = i;
-//								msg.arg2 = listPos;
-//							}
-//							listPos++;
-//						}
-//						listPos = 0;
-//						// iterates through the disc list, checking for an
-//						// Inquiry with matching inqId and inqType
-//						while (listPos < Helioroom.discList.size()
-//								&& i.getInqType().equals("discussion")) {
-//							if ((inqList.get(listPos).getInqId() == i
-//									.getInqId())
-//									&& (inqList.get(listPos).getInqGroup()
-//											.equals(i.getInqGroup()))) {
-//								// dAdapter.insert(i, listPos);
-//								msg.arg1 = 4;
-//								msg.obj = i;
-//								msg.arg2 = listPos;
-//							}
-//							listPos++;
-//						}
-//					}
-//
-//					xmppHandler.dispatchMessage(msg);
-//
-//					qAdapter.notifyDataSetChanged();
-//
-//				}
-//			});
-//
-//			xmppService.addEventListener(listener);
-//
-//		}
-//
-//		@Override
-//		public void onServiceDisconnected(ComponentName cn) {
-//
-//		}
-//	};
 
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }
