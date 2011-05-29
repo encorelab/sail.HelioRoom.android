@@ -42,6 +42,9 @@ public class HelioroomTab extends TabActivity {
 		TextView groupIdViewer = (TextView) findViewById(R.id.group_viewer);
 		groupIdViewer.setText(HelioroomLogin.groupId);
 
+		// To receive messages in the inquiry tab we set it current
+		// and then switch to the observation tab
+		getTabHost().setCurrentTab(1);
 		getTabHost().setCurrentTab(0);
 
 	}
