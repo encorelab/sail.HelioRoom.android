@@ -23,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,9 @@ public class InquiryTab extends Activity {
 	TextView vNote = null;
 	TextView vComment = null;
 	EditText vEdit = null;
+	private Spinner colourSpinner = null;
+	private Spinner planetSpinner = null;
+	
 	String groupId = HelioroomLogin.groupId;						//set at login screen
 	//private XmppService service;
 	private XMPPThread xmpp;
@@ -70,22 +74,35 @@ public class InquiryTab extends Activity {
 				} else if (i.getInqType().equals("discussion")) {
 					dAdapter.add(i);
 					dAdapter.notifyDataSetChanged();
-				} else if (i.getInqType().equals("question with comments")) {
+				}
+				/*
+				 * TODO we need to update the inquiry that is commented on (delete insert),
+				 * also the commenting seems to result in a crashing application.
+				 */
+				else if (false && i.getInqType().equals("question with comments")) {
 					int listPos = 0;
+					int listSize = inqList.size();
 					// iterates through the inq list, checking for an
 					// Inquiry with matching inqId and inqType
-					while (listPos < inqList.size()) {
-						if ((inqList.get(listPos).getInqId() == i
-								.getInqId())
-								&& (inqList.get(listPos).getInqGroup()
-										.equals(i.getInqGroup()))) {
+					while (listPos < listSize) {
+						int listInqId = inqList.get(listPos).getInqId();
+						String listInqGroup = inqList.get(listPos).getInqGroup();
+						int rvdInqId = i.getInqId();
+						String rvdInqGroup = i.getInqGroup();
+						
+						if (listInqId == rvdInqId && listInqGroup.equals(rvdInqGroup)) {
+							qAdapter.remove(i);
 							qAdapter.insert(i, listPos);
 						}
 						listPos++;
 					}
 					listPos = 0;
 					qAdapter.notifyDataSetChanged();
-				} else if (i.getInqType().equals("discussion with comments")) {
+				}
+				/*
+				 * TODO: fix once question with comments handling is fixed
+				 */
+				else if (false && i.getInqType().equals("discussion with comments")) {
 					int listPos = 0;
 					// iterates through the disc list, checking for an
 					// Inquiry with matching inqId and inqType
@@ -109,7 +126,7 @@ public class InquiryTab extends Activity {
 		
 		setContentView(R.layout.inquiry);
 
-		qTitle = (EditText) findViewById(R.id.inqTitle);
+		//qTitle = (EditText) findViewById(R.id.inqTitle);
 		qContent = (EditText) findViewById(R.id.inqNote);
 		dTitle = (EditText) findViewById(R.id.discTitle);
 		dContent = (EditText) findViewById(R.id.discNote);
@@ -131,7 +148,18 @@ public class InquiryTab extends Activity {
 		qList.setOnItemClickListener(onListClickInq);
 		dList.setOnItemClickListener(onListClickDisc);
 		
-		
+		colourSpinner = (Spinner) findViewById(R.id.colourSpinner);
+	    ArrayAdapter colourAdapter = ArrayAdapter.createFromResource(
+	            this, R.array.colours, android.R.layout.simple_spinner_item);
+	    colourAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	    colourSpinner.setAdapter(colourAdapter);
+
+	    planetSpinner = (Spinner) findViewById(R.id.planetSpinner);
+	    ArrayAdapter planetAdapter = ArrayAdapter.createFromResource(
+	            this, R.array.planets, android.R.layout.simple_spinner_item);
+	    planetAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	    planetSpinner.setAdapter(planetAdapter);
+	    
 		//TODO:
 		//Get this working with Json out OBV rollcall/proto isnt working right now
 		//Add a toast to let the idiots know theyve filled too many fields
@@ -157,14 +185,17 @@ public class InquiryTab extends Activity {
 			// the following if loops exist to force the correct behaviour with the Contribute button
 			// ie only allow a contrib if exactly Title and Note of one column are not null
 			// contrib for Question
+//			if (dTitle.getText().toString().equals("") && dContent.getText().toString().equals("") && vEdit.getText().toString().equals("")
+//				&& !qTitle.getText().toString().equals("") && !qContent.getText().toString().equals("")) {
 			if (dTitle.getText().toString().equals("") && dContent.getText().toString().equals("") && vEdit.getText().toString().equals("")
-				&& !qTitle.getText().toString().equals("") && !qContent.getText().toString().equals("")) {
+				&& !qContent.getText().toString().equals("")) {
 					
 					Inquiry i = new Inquiry();
 					i.setInqId(idCounter);
 					i.setInqType("question");
 					i.setInqGroup(groupId);
-					i.setInqTitle(qTitle.getText().toString());
+					//i.setInqTitle(qTitle.getText().toString());
+					i.setInqTitle((String) colourSpinner.getSelectedItem() + " is " + (String) planetSpinner.getSelectedItem());
 					i.setInqContent(qContent.getText().toString());
 
 					//qAdapter.add(i);
@@ -176,7 +207,7 @@ public class InquiryTab extends Activity {
 					
 			}
 			// contrib for Disc
-			else if (qTitle.getText().toString().equals("") && qContent.getText().toString().equals("") && vEdit.getText().toString().equals("")
+			else if (qContent.getText().toString().equals("") && vEdit.getText().toString().equals("")
 				&& !dTitle.getText().toString().equals("") && !dContent.getText().toString().equals("")) {
 					
 					Inquiry i = new Inquiry();
@@ -194,7 +225,7 @@ public class InquiryTab extends Activity {
 					Helioroom.xmpp.sendEvent(ev);
 			}
 			// contrib for Viewer (god this is ugly)
-			else if (qTitle.getText().toString().equals("") && qContent.getText().toString().equals("") &&
+			else if (qContent.getText().toString().equals("") &&
 				dTitle.getText().toString().equals("") && dContent.getText().toString().equals("") &&
 				!vEdit.getText().toString().equals("")) {
 				if (!inqList.isEmpty() || !discList.isEmpty()) {		//locks contrib button if the lists are empty
@@ -208,12 +239,16 @@ public class InquiryTab extends Activity {
 					else if (type.equals("discussion") || type.equals("discussion with comments")) {
 						currentInq.setInqType("discussion with comments");
 					}
+					/*FIXME we need to set the group ID here. This will result in some
+					 * work in the event handler. We cannot have groupid being part of the
+					 * identifier.
+					 */
 					currentInq.setInqGroup(groupId);
 					currentInq.addInqComment(vEdit.getText().toString());
 					vComment.setText(currentInq.getInqComments());
 //					Event ev = new Event("inquiry_submitted", i);			//will this just create a new, or overwrite?
 //					ev.toJson();
-					Event ev = new Event("submit_inquiry", currentInq);
+					Event ev = new Event("inquiry_submitted", currentInq);
 					
 					Helioroom.xmpp.sendEvent(ev);
 				}
@@ -224,14 +259,14 @@ public class InquiryTab extends Activity {
 				toast.setGravity(Gravity.CENTER|Gravity.CENTER, 0, 0);
 				toast.show();
 
-				qTitle.setText("");
+				//qTitle.setText("");
 				qContent.setText("");
 				dTitle.setText("");
 				dContent.setText("");
 				vEdit.setText("");
 			}
 			
-			qTitle.setText("");
+			//qTitle.setText("");
 			qContent.setText("");
 			dTitle.setText("");
 			dContent.setText("");

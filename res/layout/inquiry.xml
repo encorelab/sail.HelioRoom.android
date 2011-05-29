@@ -6,10 +6,10 @@
 		android:id="@+id/inqDiscTable">
 		<TableRow android:layout_width="match_parent"
 			android:layout_height="match_parent">
-			<TextView android:text="Question" android:textSize="30sp"
+			<TextView android:text="Hypotheses" android:textSize="30sp"
 				android:textStyle="bold" android:layout_height="wrap_content"
 				android:layout_width="0dip" android:layout_weight="1" />
-			<TextView android:text="Idea/Comment" android:textSize="30sp"
+			<TextView android:text="Ideas/Comments" android:textSize="30sp"
 				android:textStyle="bold" android:layout_height="wrap_content"
 				android:layout_width="0dip" android:layout_weight="1" />
 		</TableRow>
@@ -22,16 +22,37 @@
 		</TableRow>
 		<TableRow android:layout_width="match_parent"
 			android:layout_height="match_parent">
-			<EditText android:id="@+id/inqTitle" android:hint="Title"
-				android:layout_height="wrap_content" android:layout_width="0dip"
-				android:layout_weight="1" android:drawableRight="@drawable/pencil" />
+			<TableRow android:layout_width="0dip"
+				android:layout_weight="1"
+			    android:layout_height="match_parent">
+				<Spinner 
+			        android:id="@+id/colourSpinner"
+			        android:layout_width="180sp"
+			        android:layout_height="wrap_content"
+			        android:drawSelectorOnTop="true"
+			        android:prompt="@string/colour_prompt"
+			    />
+			    <TextView android:text="is"
+					android:textStyle="bold" android:textSize="20sp" android:padding="4sp"
+					android:layout_height="wrap_content"
+					android:layout_width="30sp"
+					android:layout_below="@id/inqDiscTable" />
+				<Spinner 
+			        android:id="@+id/planetSpinner"
+			        android:layout_width="180sp"
+			        android:layout_height="wrap_content"
+			        android:drawSelectorOnTop="true"
+			        android:prompt="@string/planet_prompt"
+			    />
+			</TableRow>
+			
 			<EditText android:id="@+id/discTitle" android:hint="Title"
 				android:layout_height="wrap_content" android:layout_width="0dip"
 				android:layout_weight="1" android:drawableRight="@drawable/pencil" />
 		</TableRow>
 		<TableRow android:layout_width="match_parent"
 			android:layout_height="match_parent">
-			<EditText android:id="@+id/inqNote" android:hint="Note"
+			<EditText android:id="@+id/inqNote" android:hint="Evidence"
 				android:layout_height="wrap_content" android:layout_width="0dip"
 				android:layout_weight="1" android:drawableRight="@drawable/pencil" />
 			<EditText android:id="@+id/discNote" android:hint="Note"
@@ -40,7 +61,7 @@
 		</TableRow>
 		<TableRow android:layout_width="match_parent"
 			android:layout_height="match_parent" android:layout_span="2">
-			<TextView android:text="Inquiry Discussion Viewer"
+			<TextView android:text="Discussion Viewer"
 				android:textStyle="bold" android:textSize="30sp" android:padding="4sp"
 				android:layout_height="wrap_content" android:layout_width="wrap_content"
 				android:layout_below="@id/inqDiscTable" />
