@@ -37,7 +37,7 @@
 			android:layout_marginTop="30sp" android:layout_width="170sp" android:layout_height="wrap_content" />
 	</LinearLayout>
 	<TextView android:layout_width="match_parent" android:layout_height="5sp" android:background="#FFFFFF"
-		android:layout_marginTop="75sp" />	
+		android:layout_marginTop="75sp" />
 	<TextView android:text="Our observations" android:textSize="40sp" android:layout_marginLeft="30sp"
 		android:layout_marginTop="75sp" android:layout_width="match_parent" android:layout_height="match_parent" />
 	<TableLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_marginTop="40sp" >
