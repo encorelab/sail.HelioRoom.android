@@ -2,4 +2,6 @@
 <resources>
     <string name="hello">Hello World, HelioRoom!</string>
     <string name="app_name">HelioRoom</string>
+    <string name="colour_prompt">Choose a colour</string>
+    <string name="planet_prompt">Choose a planet</string>
 </resources>
