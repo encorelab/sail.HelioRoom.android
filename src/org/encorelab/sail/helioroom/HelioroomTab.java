@@ -38,6 +38,9 @@ public class HelioroomTab extends TabActivity {
 		intent = new Intent().setClass(this, InquiryTab.class);
 		spec = tabHost.newTabSpec("inquiry").setIndicator("Hypotheses").setContent(intent);
 		tabHost.addTab(spec);
+		
+		TextView groupIdViewer = (TextView) findViewById(R.id.group_viewer);
+		groupIdViewer.setText(HelioroomLogin.groupId);
 
 		getTabHost().setCurrentTab(0);
 
