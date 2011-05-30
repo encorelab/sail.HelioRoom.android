@@ -4,6 +4,7 @@ public class Inquiry {
 	private int inqId;
 	private String inqType = "";
 	private String inqGroup = "";
+	private String inqAuthGroup = "";
 	private String inqTitle = "";
 	private String inqContent = "";
 	private String inqComment = "";
@@ -44,6 +45,12 @@ public class Inquiry {
 	}
 	public String getInqComments() {
 		return inqComment;
+	}
+	public void setInqAuthGroup(String inqAuthGroup) {
+		this.inqAuthGroup = inqAuthGroup;
+	}
+	public String getInqAuthGroup() {
+		return inqAuthGroup;
 	}
 
 }

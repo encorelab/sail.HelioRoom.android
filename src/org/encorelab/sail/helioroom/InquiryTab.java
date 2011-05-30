@@ -1,7 +1,6 @@
 package org.encorelab.sail.helioroom;
 
 
-
 import org.encorelab.sail.Event;
 import org.encorelab.sail.android.EventListener;
 import org.encorelab.sail.android.EventResponder;
@@ -44,7 +43,6 @@ public class InquiryTab extends Activity implements OnClickListener {
 	Button submit = null;
 	
 	String groupId = HelioroomLogin.groupId;						//set at login screen
-	//private XmppService service;
 	private XMPPThread xmpp;
 	
 	
@@ -125,7 +123,6 @@ public class InquiryTab extends Activity implements OnClickListener {
 		
 		setContentView(R.layout.inquiry);
 
-		//qTitle = (EditText) findViewById(R.id.inqTitle);
 		qContent = (EditText) findViewById(R.id.inqNote);
 		dTitle = (EditText) findViewById(R.id.discTitle);
 		dContent = (EditText) findViewById(R.id.discNote);
@@ -160,8 +157,6 @@ public class InquiryTab extends Activity implements OnClickListener {
 	    planetSpinner.setAdapter(planetAdapter);
 
 		//TODO:
-		//Add a toast to let the idiots know theyve filled too many fields
-		//
 		//XML
 		//Add boxes around the three lists (LOW PRIORITY)
 		//Visible scroll bar (LOW PRIORITY)
@@ -191,6 +186,7 @@ public class InquiryTab extends Activity implements OnClickListener {
 					Inquiry i = new Inquiry();
 					i.setInqId(idCounter);
 					i.setInqType("question");
+					i.setInqAuthGroup(groupId);
 					i.setInqGroup(groupId);
 					//i.setInqTitle(qTitle.getText().toString());
 					i.setInqTitle((String) colourSpinner.getSelectedItem() + " is " + (String) planetSpinner.getSelectedItem());
@@ -211,6 +207,7 @@ public class InquiryTab extends Activity implements OnClickListener {
 					Inquiry i = new Inquiry();
 					i.setInqId(idCounter);
 					i.setInqType("discussion");				
+					i.setInqAuthGroup(groupId);
 					i.setInqGroup(groupId);
 					i.setInqTitle(dTitle.getText().toString());
 					i.setInqContent(dContent.getText().toString());
@@ -244,8 +241,7 @@ public class InquiryTab extends Activity implements OnClickListener {
 					currentInq.setInqGroup(groupId);
 					currentInq.addInqComment(vEdit.getText().toString());
 					vComment.setText(currentInq.getInqComments());
-//					Event ev = new Event("inquiry_submitted", i);			//will this just create a new, or overwrite?
-//					ev.toJson();
+
 					Event ev = new Event("inquiry_submitted", currentInq);
 					
 					Helioroom.xmpp.sendEvent(ev);
