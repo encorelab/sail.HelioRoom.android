@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>HelioRoom</name>
+	<name>sail.HelioRoom.android</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -30,16 +30,4 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>sail.java_src</name>
-			<type>2</type>
-			<locationURI>_android_sail_java_648371ff/src</locationURI>
-		</link>
-		<link>
-			<name>sail.java_test</name>
-			<type>2</type>
-			<locationURI>_android_sail_java_648371ff/test</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>
