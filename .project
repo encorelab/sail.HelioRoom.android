@@ -30,16 +30,4 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>sail.java.android_src</name>
-			<type>2</type>
-			<locationURI>_android_sail_java_android_8dcb4980/src</locationURI>
-		</link>
-		<link>
-			<name>sail.java.android_test</name>
-			<type>2</type>
-			<locationURI>_android_sail_java_android_8dcb4980/test</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>
