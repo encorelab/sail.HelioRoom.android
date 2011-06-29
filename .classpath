@@ -9,5 +9,7 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/sail.java"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/sail.java.android"/>
 	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="src" path="sail.java.android_src"/>
+	<classpathentry kind="src" path="sail.java.android_test"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
