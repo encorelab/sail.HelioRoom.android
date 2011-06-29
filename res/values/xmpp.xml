@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="xmpp_host">proto.encorelab.org</string>
+    <string name="xmpp_host">roadshow.encorelab.org</string>
     <string name="xmpp_port">5222</string>
     <string name="xmpp_default_password">92fa1fc5974653ef9307573a3d37f25bae9636e9</string>
-    <string name="xmpp_default_conference">s3@conference.proto.encorelab.org</string>
+    <string name="xmpp_default_conference">s3@conference.roadshow.encorelab.org</string>
 </resources>

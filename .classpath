@@ -6,8 +6,8 @@
 	<classpathentry kind="lib" path="/sail.java/lib/gson-1.7.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="/sail.java.android/lib/asmack-2010.05.07.jar"/>
-	<classpathentry kind="src" path="gen"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/sail.java"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/sail.java.android"/>
+	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
